@@ -4,12 +4,18 @@
 
 #ifndef PRODUCTO_H
 #define PRODUCTO_H
+#include <string>
+#include <iostream>
+using namespace std;
 
 
 
 class Producto {
-
-
+private:
+    string nombre;
+    string descripcion;
+    double precio;
+    string categoria;
 
 
 };
