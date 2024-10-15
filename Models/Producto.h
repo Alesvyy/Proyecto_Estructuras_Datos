@@ -17,6 +17,14 @@ private:
     double precio;
     string categoria;
 
+    void crearProducto(string nombre, string descripcion, double precio, string categoria) {
+    }
+
+    void mostrarProducto(){}
+
+    void eliminarProducto(){}
+
+    void modificarProd(){}
 
 };
 
