@@ -8,4 +8,5 @@ add_executable(ProyectoEstructurasDeDatos main.cpp
         Models/Producto.h
         menu.cpp
         menu.h
-        Models/Categoría.cpp)
+        Models/Categoria.h
+        Models/Categoria.cpp)
