@@ -1,9 +1,6 @@
-//
-// Created by Bryan Ramirez Campos on 14/10/24.
-//
-
 #ifndef PRODUCTO_H
 #define PRODUCTO_H
+
 #include <string>
 #include <iostream>
 using namespace std;
@@ -11,6 +8,15 @@ using namespace std;
 
 
 class Producto {
+public:
+    // Constructor
+    Producto(const std::string& nombre, double precio, const std::string& descripcion);
+
+    // Getters
+    std::string getNombre() const;
+    double getPrecio() const;
+    std::string getDescripcion() const;
+
 private:
     string nombre;
     string descripcion;
