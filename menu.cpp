@@ -50,7 +50,7 @@ void Menu::mostrarMenuColas() {
 
         switch (opcion) {
             case 1:
-                //insertarTurno();
+                cola.insertarElem("A001");
                     break;
             case 2:
                 //atenderCliente();

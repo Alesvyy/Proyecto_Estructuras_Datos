@@ -1,5 +1,6 @@
 #ifndef MENU_H
 #define MENU_H
+#include "PracticaColas/Cola.h"
 
 #include "Models/Producto.h"
 #include <vector>
@@ -14,6 +15,7 @@ public:
 
 private:
     std::vector<Producto> productos;
+    Cola cola;
 };
 
 #endif // MENU_H
