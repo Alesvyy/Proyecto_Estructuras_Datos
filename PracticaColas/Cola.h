@@ -18,7 +18,7 @@ public:
     Cola();                          // Constructora: Construye una cola vacía
     bool esVaciaCola() const;         // Analizadora: Retorna si la cola está vacía
     Cola insertarElem(string elemento);  // Modificadora: Inserta un nuevo elemento
-    Cola atender(string &elemento);      // Modificadora: Extrae el primer elemento de la cola
+    Cola atenderCliente(string &elemento);      // Modificadora: Extrae el primer elemento de la cola
     Cola eliminarElem(int posicion);  // Modificadora: Elimina un elemento por su posición
     string ultimoElem() const;        // Analizadora: Retorna el último elemento de la cola
     int getLongitud() const;          // Analizadora: Retorna la cantidad de elementos

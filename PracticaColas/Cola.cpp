@@ -1,5 +1,6 @@
 #include "Cola.h"
 #include <string>
+#include <iostream>
 using namespace std;
 
 Cola::Cola() : frente(0), final(-1), longitud(0) {}
@@ -17,10 +18,11 @@ Cola Cola::insertarElem(string elemento) {
     return *this;
 }
 
-Cola Cola::atender(string &elemento) {
+Cola Cola::atenderCliente(string &elemento) {
     if (!esVaciaCola()) {
         elemento = datos[frente];        // Toma el elemento del frente
         frente = (frente + 1) % MAX_SIZE; // Movimiento circular del frente
+        std::cout << "Elemento atendido: " << elemento << "\n";
         longitud--;                      // Decrementa la longitud
     }
     return *this;

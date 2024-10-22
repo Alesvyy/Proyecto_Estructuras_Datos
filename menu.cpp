@@ -33,6 +33,7 @@ void Menu::mostrarMenu() {
 
 void Menu::mostrarMenuColas() {
     int opcion;
+    string atendido;
     std::string turno;
 
     do {
@@ -53,8 +54,8 @@ void Menu::mostrarMenuColas() {
                 cola.insertarElem(turno);
                 break;
             case 2:
-                // Implementar la lógica de atención si lo necesitas
-                break;
+                cola.atenderCliente(atendido);
+                    break;
             case 3:
                 std::cout << "Ultimo turno ingresado: " << cola.ultimoElem() << "\n";
                 break;
