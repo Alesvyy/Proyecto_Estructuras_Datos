@@ -37,11 +37,12 @@ Cola Cola::eliminarElem(int posicion) {
     return *this;
 }
 
-string Cola::ultimoElem() const {
-    if (!esVaciaCola()) {
-        return datos[final]; // Retorna el último elemento
+string Cola::ultimo() const {
+    if (!elementos.empty()) {
+        return elementos.back(); // Devuelve el ultimo turno de la cola
+    }else {
+        return "No hay turnos en la cola"; // En caso de que la cola este vacia
     }
-    return nullptr; // Indica que la cola está vacía
 }
 
 int Cola::getLongitud() const {

@@ -1,10 +1,12 @@
 #ifndef COLA_H
 #define COLA_H
 #include <string>
+#include <list>
 using namespace std;
 
 class Cola {
 private:
+    std::list<std::string> elementos;
     static const int MAX_SIZE = 100;  // Tamaño máximo de la cola
     string datos[MAX_SIZE];              // Arreglo para almacenar los elementos
     int frente;                       // Índice del frente de la cola
@@ -12,6 +14,7 @@ private:
     int longitud;                     // Cantidad de elementos en la cola
 
 public:
+    std::string ultimo() const;
     Cola();                          // Constructora: Construye una cola vacía
     bool esVaciaCola() const;         // Analizadora: Retorna si la cola está vacía
     Cola insertarElem(string elemento);  // Modificadora: Inserta un nuevo elemento
