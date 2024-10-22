@@ -1,9 +1,7 @@
 #include "menu.h"
 #include <iostream>
 
-Menu::Menu() {
-
-}
+Menu::Menu() {}
 
 void Menu::mostrarMenu() {
     int opcion;
@@ -33,16 +31,16 @@ void Menu::mostrarMenu() {
     } while (opcion != 0);
 }
 
-
 void Menu::mostrarMenuColas() {
     int opcion;
+    std::string turno;
 
     do {
         std::cout << "\n";
         std::cout << "1. Insertar Turno\n";
         std::cout << "2. Atender Clientes\n";
-        std::cout << "2. Mostrar ultimo turno ingresado\n";
-        std::cout << "2. Eliminar turno espec\n";
+        std::cout << "3. Mostrar ultimo turno ingresado\n";
+        std::cout << "4. Eliminar turno especifico\n";  // Nueva opción
         std::cout << "0. Salir\n";
         std::cout << "\n";
         std::cout << "Seleccione una opcion: ";
@@ -50,20 +48,31 @@ void Menu::mostrarMenuColas() {
 
         switch (opcion) {
             case 1:
-                cola.insertarElem("A001");
-                    break;
+                std::cout << "Ingrese el numero del turno: ";
+                std::cin >> turno;
+                cola.insertarElem(turno);
+                break;
             case 2:
-                //atenderCliente();
-                    break;
+                // Implementar la lógica de atención si lo necesitas
+                break;
             case 3:
-                //mostrarUltimoTurnoIngresado();
-                    break;
+                std::cout << "Ultimo turno ingresado: " << cola.ultimoElem() << "\n";
+                break;
             case 4:
-                //eliminarTurnoEspec();
-                    break;
+                std::cout << "Ingrese el numero del turno a eliminar: ";
+                std::cin >> turno;
+                int posicion;
+                posicion = cola.buscarTurno(turno);
+                if (posicion != -1) {
+                    cola.eliminarElem(posicion);
+                    std::cout << "Turno " << turno << " eliminado.\n";
+                } else {
+                    std::cout << "Turno no encontrado.\n";
+                }
+                break;
             case 0:
                 std::cout << "Saliendo...\n";
-            break;
+                break;
             default:
                 std::cout << "Opcion no válida. Intente de nuevo.\n";
         }

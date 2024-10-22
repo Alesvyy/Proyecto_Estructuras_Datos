@@ -41,7 +41,7 @@ string Cola::ultimoElem() const {
     if (!esVaciaCola()) {
         return datos[final]; // Retorna el último elemento
     }
-    return nullptr; // Indica que la cola está vacía
+    return ""; // Si la cola está vacía, retorna una cadena vacía
 }
 
 int Cola::getLongitud() const {
@@ -52,4 +52,14 @@ void Cola::destruirCola() {
     frente = 0;
     final = -1;
     longitud = 0; // Resetea la cola
+}
+
+int Cola::buscarTurno(const string& turno) const {
+    for (int i = 0; i < longitud; i++) {
+        int idx = (frente + i) % MAX_SIZE;
+        if (datos[idx] == turno) {
+            return idx;  // Retorna el índice si encuentra el turno
+        }
+    }
+    return -1;  // Si no se encuentra, retorna -1
 }
