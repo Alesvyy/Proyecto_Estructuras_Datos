@@ -2,7 +2,12 @@
 #include "menu.h"
 
 int main() {
+
+
+
     Menu menu;
-    menu.mostrarMenu();
+    //menu.mostrarMenu();
+    menu.mostrarMenuColas();
+
     return 0;
 }

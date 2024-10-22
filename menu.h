@@ -8,6 +8,7 @@ class Menu {
 public:
     Menu();
     void mostrarMenu();
+    void mostrarMenuColas();
     void agregarProducto();
     void verProductos();
 

@@ -33,6 +33,43 @@ void Menu::mostrarMenu() {
     } while (opcion != 0);
 }
 
+
+void Menu::mostrarMenuColas() {
+    int opcion;
+
+    do {
+        std::cout << "\n";
+        std::cout << "1. Insertar Turno\n";
+        std::cout << "2. Atender Clientes\n";
+        std::cout << "2. Mostrar ultimo turno ingresado\n";
+        std::cout << "2. Eliminar turno espec\n";
+        std::cout << "0. Salir\n";
+        std::cout << "\n";
+        std::cout << "Seleccione una opcion: ";
+        std::cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                //insertarTurno();
+                    break;
+            case 2:
+                //atenderCliente();
+                    break;
+            case 3:
+                //mostrarUltimoTurnoIngresado();
+                    break;
+            case 4:
+                //eliminarTurnoEspec();
+                    break;
+            case 0:
+                std::cout << "Saliendo...\n";
+            break;
+            default:
+                std::cout << "Opcion no válida. Intente de nuevo.\n";
+        }
+    } while (opcion != 0);
+}
+
 void Menu::agregarProducto() {
     std::string nombre;
     double precio;
