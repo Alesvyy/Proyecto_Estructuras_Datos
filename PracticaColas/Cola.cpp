@@ -1,4 +1,6 @@
 #include "Cola.h"
+#include <string>
+using namespace std;
 
 Cola::Cola() : frente(0), final(-1), longitud(0) {}
 
@@ -6,7 +8,7 @@ bool Cola::esVaciaCola() const {
     return longitud == 0;
 }
 
-Cola Cola::insertarElem(int elemento) {
+Cola Cola::insertarElem(string elemento) {
     if (longitud < MAX_SIZE) {
         final = (final + 1) % MAX_SIZE;  // Movimiento circular del final
         datos[final] = elemento;         // Inserta el nuevo elemento
@@ -15,7 +17,7 @@ Cola Cola::insertarElem(int elemento) {
     return *this;
 }
 
-Cola Cola::atender(int &elemento) {
+Cola Cola::atender(string &elemento) {
     if (!esVaciaCola()) {
         elemento = datos[frente];        // Toma el elemento del frente
         frente = (frente + 1) % MAX_SIZE; // Movimiento circular del frente
@@ -35,11 +37,11 @@ Cola Cola::eliminarElem(int posicion) {
     return *this;
 }
 
-int Cola::ultimoElem() const {
+string Cola::ultimoElem() const {
     if (!esVaciaCola()) {
         return datos[final]; // Retorna el último elemento
     }
-    return -1; // Indica que la cola está vacía
+    return nullptr; // Indica que la cola está vacía
 }
 
 int Cola::getLongitud() const {
