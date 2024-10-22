@@ -41,18 +41,17 @@ void Menu::mostrarMenuColas() {
         std::cout << "1. Insertar Turno\n";
         std::cout << "2. Atender Clientes\n";
         std::cout << "3. Mostrar ultimo turno ingresado\n";
-        std::cout << "4. Eliminar turno especifico\n";  // Nueva opción
+        std::cout << "4. Eliminar turno especifico\n";
+        std::cout << "5. Verificar cola\n";
         std::cout << "0. Salir\n";
         std::cout << "\n";
-        std::cout << "Seleccione una opcion: ";
+        std::cout << "Seleccione una opcion:";
         std::cin >> opcion;
 
         switch (opcion) {
             case 1:
-                std::cout << "Ingrese el numero del turno: ";
-                std::cin >> turno;
-                cola.insertarElem(turno);
-                break;
+                cola.insertarElem();
+                    break;
             case 2:
                 cola.atenderCliente(atendido);
                     break;
@@ -71,9 +70,17 @@ void Menu::mostrarMenuColas() {
                     std::cout << "Turno no encontrado.\n";
                 }
                 break;
+            case 5:
+                if(cola.esVaciaCola()) {
+                    cout <<"La cola esta vacia";
+                }else {
+                    cola.listarCola();
+                }
+                break;
+
             case 0:
                 std::cout << "Saliendo...\n";
-                break;
+            break;
             default:
                 std::cout << "Opcion no válida. Intente de nuevo.\n";
         }

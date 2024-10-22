@@ -1,5 +1,6 @@
 #include "Cola.h"
 #include <string>
+#include <random>
 #include <iostream>
 using namespace std;
 
@@ -9,10 +10,10 @@ bool Cola::esVaciaCola() const {
     return longitud == 0;
 }
 
-Cola Cola::insertarElem(string elemento) {
+Cola Cola::insertarElem() {
     if (longitud < MAX_SIZE) {
         final = (final + 1) % MAX_SIZE;  // Movimiento circular del final
-        datos[final] = elemento;         // Inserta el nuevo elemento
+        datos[final] = generarAlphanumericoRandom();         // Inserta el nuevo elemento
         longitud++;                      // Incrementa la longitud
     }
     return *this;
@@ -66,3 +67,32 @@ int Cola::buscarTurno(const string& turno) const {
     }
     return -1;  // Si no se encuentra, retorna -1
 }
+
+string Cola::generarAlphanumericoRandom() {
+    const string caracteres = "ABCDEFGHIJKLMNOPQERTUVWXYZ";
+    const string caracteresNumericos = "0123456789";
+
+    random_device rd;
+    mt19937 generator(rd());
+
+    uniform_int_distribution<> distribution(0, caracteres.size()-1);
+
+    string caracterRandom;
+
+    caracterRandom = caracteres[distribution(generator)];
+    uniform_int_distribution<> numeric_distribution(0,caracteresNumericos.size()-1);
+    for(int i = 0; i < 3; i++) {
+        caracterRandom += caracteresNumericos[numeric_distribution(generator)];
+    }
+
+
+
+    return caracterRandom;
+
+}
+void Cola::listarCola() {
+    for (int i = 0; i < longitud; i++) {
+        std::cout << datos[i]+"\n";
+    }
+}
+
