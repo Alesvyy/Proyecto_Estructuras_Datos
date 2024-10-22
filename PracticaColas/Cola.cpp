@@ -22,9 +22,9 @@ Cola Cola::insertarElem() {
 Cola Cola::atenderCliente(string &elemento) {
     if (!esVaciaCola()) {
         elemento = datos[frente];        // Toma el elemento del frente
-        frente = (frente + 1) % MAX_SIZE; // Movimiento circular del frente
+        frente = (frente) % MAX_SIZE; // Movimiento circular del frente
         std::cout << "Elemento atendido: " << elemento << "\n";
-        longitud--;                      // Decrementa la longitud
+        eliminarElem(0);                      // Decrementa la longitud
     }
     return *this;
 }
