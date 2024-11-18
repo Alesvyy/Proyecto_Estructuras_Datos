@@ -10,6 +10,7 @@ using namespace std;
 
 
 class Categoria {
+private:
     string descricion;
     string nombre;
 
@@ -21,6 +22,8 @@ public:
 
     string getNombre();
     void setNombre(string pNombre);
+
+
 
 
 

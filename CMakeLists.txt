@@ -13,4 +13,6 @@ add_executable(ProyectoEstructurasDeDatos
         Models/Categoria.cpp
         PracticaColas/Cola.cpp
         PracticaColas/Cola.h
-        Models/Categoría.cpp)
+        Models/ListaCategorias.cpp
+        Models/ListaCategorias.h
+)
