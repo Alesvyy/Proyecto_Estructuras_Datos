@@ -16,6 +16,7 @@ private:
 
 public:
     Categoria();
+    Categoria(string nombre, string descripcion);
 
     string getDescripcion();
     void setDescripcion(string pDescripcion);

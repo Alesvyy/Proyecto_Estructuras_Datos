@@ -5,11 +5,23 @@
 #ifndef LISTACATEGORIAS_H
 #define LISTACATEGORIAS_H
 #include "Categoria.h"
+#include "NodoCategoria.h"
 
 
 class ListaCategorias {
     public:
-    void agregarCategoria(Categoria categoria);
+        ListaCategorias();
+        ~ListaCategorias();
+
+        void agregarCategoria(Categoria* categoria);
+        void eliminarCategoria(string nombreCategoria);
+        NodoCategoria* getHead();
+
+    private:
+        NodoCategoria* head;
+        bool hayRepetidos(string nombreCategoria);
+        void setHead(NodoCategoria* nuevoHead);
+
 
 
 };
