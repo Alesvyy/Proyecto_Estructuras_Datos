@@ -37,10 +37,78 @@ void ListaCategorias::agregarCategoria(Categoria *categoria) {
             }
             temp->setSiguiente(nodoCategoriaNueva);
         }
+        cout <<"Se ha agregado la categoria "<< categoria->getNombre() << endl;
+
     } else {
         cout <<"Ya existe esta categoria"<< endl;
     }
 
+}
+
+NodoCategoria* ListaCategorias::buscarCategoria(string nombreCategoria) {
+    NodoCategoria* temp = head;
+
+    while (temp != nullptr) {
+        if(temp->getCategoria()->getNombre() == nombreCategoria) {
+            return temp;
+        }
+        temp = temp->getSiguiente();
+    }
+    return temp;
+}
+NodoCategoria* ListaCategorias::buscarNodoAnterior(string nombreCategoria) {
+    if(head == nullptr) {
+        return nullptr;
+    }
+    NodoCategoria* temp = head;
+
+    while (temp->getSiguiente() != nullptr) {
+        if(temp->getSiguiente()->getCategoria()->getNombre() == nombreCategoria) {
+            return temp;
+        }
+        temp = temp->getSiguiente();
+    }
+    return nullptr;
+}
+
+
+void ListaCategorias::eliminarCategoria(string nombreCategoria) {
+    if(head == nullptr){
+        cout << "La lista esta vacia" << endl;
+        return;
+    }
+    if (head->getCategoria()->getNombre() == nombreCategoria){
+        NodoCategoria* temp = head;
+        head = head->getSiguiente();
+        delete temp;
+        cout << "La categoria " << nombreCategoria << " se ha eliminado" << endl;
+        return;
+    }
+    NodoCategoria* temp = buscarNodoAnterior(nombreCategoria);
+    if (temp != nullptr) {
+        NodoCategoria* nodoObjetivo = temp->getSiguiente();
+        temp->setSiguiente(nodoObjetivo->getSiguiente());
+        delete nodoObjetivo;
+        cout << "La categoria " << nombreCategoria << " se ha eliminado" << endl;
+
+    } else {
+        cout << "No se encontro la categoria " << nombreCategoria << endl;
+    }
+
+}
+
+void ListaCategorias::display() {
+    if (head == nullptr) {
+        cout << "La lista está vacía.\n";
+        return;
+    }
+
+    NodoCategoria* temp = head;
+    while (temp != nullptr) {
+        cout << temp->getCategoria()->getNombre() << " -> ";
+        temp = temp->getSiguiente();
+    }
+    cout << "nullptr\n";
 }
 
 bool ListaCategorias::hayRepetidos(string nombreCategoria) {

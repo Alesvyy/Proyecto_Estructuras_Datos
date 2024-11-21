@@ -14,8 +14,11 @@ class ListaCategorias {
         ~ListaCategorias();
 
         void agregarCategoria(Categoria* categoria);
+        NodoCategoria* buscarCategoria(string nombreCategoria);
+        NodoCategoria* buscarNodoAnterior(string nombreCategoria);
         void eliminarCategoria(string nombreCategoria);
         NodoCategoria* getHead();
+        void display();
 
     private:
         NodoCategoria* head;
