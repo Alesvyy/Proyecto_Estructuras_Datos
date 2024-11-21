@@ -10,17 +10,21 @@ using namespace std;
 
 
 class Categoria {
+private:
     string descricion;
     string nombre;
 
 public:
     Categoria();
+    Categoria(string nombre, string descripcion);
 
     string getDescripcion();
     void setDescripcion(string pDescripcion);
 
     string getNombre();
     void setNombre(string pNombre);
+
+
 
 
 
