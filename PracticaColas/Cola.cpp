@@ -12,19 +12,19 @@ bool Cola::esVaciaCola() const {
 
 Cola Cola::insertarElem() {
     if (longitud < MAX_SIZE) {
-        final = (final + 1) % MAX_SIZE;  // Movimiento circular del final
-        datos[final] = generarAlphanumericoRandom();         // Inserta el nuevo elemento
-        longitud++;                      // Incrementa la longitud
+        final = (final + 1) % MAX_SIZE;
+        datos[final] = generarAlphanumericoRandom();
+        longitud++;
     }
     return *this;
 }
 
 Cola Cola::atenderCliente(string &elemento) {
     if (!esVaciaCola()) {
-        elemento = datos[frente];        // Toma el elemento del frente
-        frente = (frente) % MAX_SIZE; // Movimiento circular del frente
+        elemento = datos[frente];
+        frente = (frente) % MAX_SIZE;
         std::cout << "Elemento atendido: " << elemento << "\n";
-        eliminarElem(0);                      // Decrementa la longitud
+        eliminarElem(0);
     }
     return *this;
 }
@@ -32,40 +32,40 @@ Cola Cola::atenderCliente(string &elemento) {
 Cola Cola::eliminarElem(int posicion) {
     if (posicion >= 0 && posicion < longitud) {
         for (int i = posicion; i != final; i = (i + 1) % MAX_SIZE) {
-            datos[i] = datos[(i + 1) % MAX_SIZE]; // Mueve los elementos hacia adelante
+            datos[i] = datos[(i + 1) % MAX_SIZE];
         }
-        final = (final - 1 + MAX_SIZE) % MAX_SIZE; // Ajusta el final
-        longitud--;                                // Decrementa la longitud
+        final = (final - 1 + MAX_SIZE) % MAX_SIZE;
+        longitud--;
     }
     return *this;
 }
 
 string Cola::ultimoElem() const {
-    if (!esVaciaCola()) { // Verifica si la cola no está vacía
-        return datos[(final + MAX_SIZE) % MAX_SIZE]; // Retorna el último elemento
+    if (!esVaciaCola()) {
+        return datos[(final + MAX_SIZE) % MAX_SIZE];
     } else {
-        return "No hay elementos en la cola"; // Mensaje si la cola está vacía
+        return "No hay elementos en la cola";
     }
 }
 
 int Cola::getLongitud() const {
-    return longitud; // Retorna la cantidad de elementos
+    return longitud;
 }
 
 void Cola::destruirCola() {
     frente = 0;
     final = -1;
-    longitud = 0; // Resetea la cola
+    longitud = 0;
 }
 
 int Cola::buscarTurno(const string& turno) const {
     for (int i = 0; i < longitud; i++) {
         int idx = (frente + i) % MAX_SIZE;
         if (datos[idx] == turno) {
-            return idx;  // Retorna el índice si encuentra el turno
+            return idx;
         }
     }
-    return -1;  // Si no se encuentra, retorna -1
+    return -1;
 }
 
 string Cola::generarAlphanumericoRandom() {

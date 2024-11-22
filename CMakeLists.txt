@@ -3,11 +3,10 @@ project(ProyectoEstructurasDeDatos)
 
 set(CMAKE_CXX_STANDARD 20)
 
-# Agregar directorios de encabezados
 include_directories(
-        ${CMAKE_SOURCE_DIR}                  # Directorio raíz del proyecto
-        ${CMAKE_SOURCE_DIR}/Models           # Directorio Models
-        ${CMAKE_SOURCE_DIR}/PracticaColas   # Directorio PracticaColas
+        ${CMAKE_SOURCE_DIR}
+        ${CMAKE_SOURCE_DIR}/Models
+        ${CMAKE_SOURCE_DIR}/PracticaColas
 )
 
 add_executable(ProyectoEstructurasDeDatos
