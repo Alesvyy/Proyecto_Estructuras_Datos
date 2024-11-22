@@ -1,123 +1,146 @@
-#include "menu.h"
-#include <iostream>
+#include "Menu.h"
+#include "Categoria.h"
+#include <limits>
 
-Menu::Menu() {}
+Menu::Menu() = default;
 
 void Menu::mostrarMenu() {
-    int opcion;
+    std::cout << "Bienvenido al Proyecto de Estructuras de Datos\n";
+    manejarOpciones();
+}
 
+void Menu::manejarOpciones() {
+    int opcion;
     do {
         std::cout << "\n";
-        std::cout << "1. Agregar Producto\n";
-        std::cout << "2. Ver Productos\n";
+        std::cout << "1. Agregar Categoria\n";
+        std::cout << "2. Modificar Categoria\n";
+        std::cout << "3. Mostrar Categoria\n";
+        std::cout << "4. Eliminar Categoria\n";
         std::cout << "0. Salir\n";
-        std::cout << "\n";
         std::cout << "Seleccione una opcion: ";
         std::cin >> opcion;
 
-        switch (opcion) {
+        switch(opcion) {
             case 1:
-                agregarProducto();
+                agregarCategoria();
             break;
             case 2:
-                verProductos();
+                modificarCategoria();
             break;
-            case 0:
-                std::cout << "Saliendo...\n";
-            break;
-            default:
-                std::cout << "Opcion no válida. Intente de nuevo.\n";
-        }
-    } while (opcion != 0);
-}
-
-void Menu::mostrarMenuColas() {
-    int opcion;
-    string atendido;
-    std::string turno;
-
-    do {
-        std::cout << "\n";
-        std::cout << "1. Insertar Turno\n";
-        std::cout << "2. Atender Clientes\n";
-        std::cout << "3. Mostrar ultimo turno ingresado\n";
-        std::cout << "4. Eliminar turno especifico\n";
-        std::cout << "5. Verificar cola\n";
-        std::cout << "0. Salir\n";
-        std::cout << "\n";
-        std::cout << "Seleccione una opcion:";
-        std::cin >> opcion;
-
-        switch (opcion) {
-            case 1:
-                cola.insertarElem();
-                    break;
-            case 2:
-                cola.atenderCliente(atendido);
-                    break;
             case 3:
-                std::cout << "Ultimo turno ingresado: " << cola.ultimoElem() << "\n";
-                break;
+                mostrarCategorias();
+            break;
             case 4:
-                std::cout << "Ingrese el numero del turno a eliminar: ";
-                std::cin >> turno;
-                int posicion;
-                posicion = cola.buscarTurno(turno);
-                if (posicion != -1) {
-                    cola.eliminarElem(posicion);
-                    std::cout << "Turno " << turno << " eliminado.\n";
-                } else {
-                    std::cout << "Turno no encontrado.\n";
-                }
-                break;
-            case 5:
-                if(cola.esVaciaCola()) {
-                    cout <<"La cola esta vacia";
-                }else {
-                    cola.listarCola();
-                }
-                break;
-
+                eliminarCategoria();
+            break;
             case 0:
                 std::cout << "Saliendo...\n";
             break;
             default:
-                std::cout << "Opcion no válida. Intente de nuevo.\n";
+                std::cout << "Opcion no valida\n";
         }
-    } while (opcion != 0);
+    } while(opcion != 0);
 }
 
-void Menu::agregarProducto() {
-    std::string nombre;
-    double precio;
-    std::string descripcion;
-
-    std::cout << "Ingrese el nombre del producto: ";
-    std::cin >> nombre;
-
-    std::cout << "Ingrese el precio del producto: ";
-    std::cin >> precio;
-
-    std::cout << "Ingrese la descripcion del producto: ";
-    std::cin.ignore();
-    std::getline(std::cin, descripcion);
-
-    Producto nuevoProducto(nombre, precio, descripcion);
-    productos.push_back(nuevoProducto);
-
-    std::cout << "Producto agregado: " << nombre << "\n";
-}
-
-void Menu::verProductos() {
-    if (productos.empty()) {
-        std::cout << "No hay productos disponibles.\n";
+void Menu::eliminarCategoria() {
+    if (categorias.empty()) {
+        std::cout << "\nNo hay categorias disponibles para eliminar.\n";
         return;
     }
 
-    std::cout << "Lista de Productos:\n";
-    for (const auto& producto : productos) {
-        std::cout << "Nombre: " << producto.getNombre()
-                  << ", Precio: " << producto.getPrecio()
-                  << ", Descripcion: " << producto.getDescripcion() << "\n";
+    int numeroCategoria = obtenerNumeroCategoria();
+
+    while (numeroCategoria < 1 || numeroCategoria > categorias.size()) {
+        std::cout << "\nError: Indice de categoria fuera de rango. Ingrese un numero entre 1 y "
+                  << categorias.size() << ".\n";
+        numeroCategoria = obtenerNumeroCategoria();
     }
+
+    categorias.erase(categorias.begin() + (numeroCategoria - 1));
+    std::cout << "\nCategoria eliminada correctamente.\n";
+}
+
+void Menu::agregarCategoria() {
+    std::string nombre;
+    std::cout << "\nIngrese el nombre de la categoria: ";
+    std::cin.ignore();
+    std::getline(std::cin, nombre);
+
+    for (const auto& categoria : categorias) {
+        if (categoria.getNombre() == nombre) {
+            std::cout << "Error: La categoria '" << nombre << "' ya existe.\n";
+            return;
+        }
+    }
+
+    Categoria nuevaCategoria(nombre);
+    categorias.push_back(nuevaCategoria);
+    std::cout << "Categoria '" << nombre << "' agregada correctamente.\n";
+}
+
+
+void Menu::mostrarCategorias() {
+    if (categorias.empty()) {
+        std::cout << "\n";
+        std::cout << "No hay categorias disponibles.\n";
+    } else {
+        std::cout << "\n";
+        std::cout << "Categorias disponibles:\n";
+        std::cout << "\n";
+        std::cout << "---------------\n";
+        for (size_t i = 0; i < categorias.size(); ++i) {
+            std::cout << i + 1 << ". " << categorias[i].getNombre() << "\n";
+            std::cout << "---------------\n";
+        }
+
+    }
+}
+
+void Menu::modificarCategoria() {
+    if (categorias.empty()) {
+        std::cout << "\nNo hay categorias disponibles para modificar.\n";
+        return;
+    }
+
+    int numeroCategoria = obtenerNumeroCategoria();
+
+    while (numeroCategoria < 1 || numeroCategoria > categorias.size()) {
+        std::cout << "\nError: Indice de categoria fuera de rango. Ingrese un numero entre 1 y "
+                  << categorias.size() << ".\n";
+        numeroCategoria = obtenerNumeroCategoria();
+    }
+
+    std::string nuevoNombre = obtenerNuevoNombre();
+
+    if (numeroCategoria >= 1 && numeroCategoria <= categorias.size()) {
+        categorias[numeroCategoria - 1].setNombre(nuevoNombre);
+        std::cout << "\nCategoria modificada correctamente.\n";
+    } else {
+        std::cout << "\nIndice fuera de rango.\n";
+    }
+}
+
+
+int Menu::obtenerNumeroCategoria() {
+    int numeroCategoria;
+    std::cout << "\nIngrese el numero de la categoria que desea eliminar: ";
+    std::cin >> numeroCategoria;
+
+    while (std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "\nEntrada invalida. Por favor ingrese un numero valido: ";
+        std::cin >> numeroCategoria;
+    }
+
+    return numeroCategoria;
+}
+
+std::string Menu::obtenerNuevoNombre() {
+    std::string nuevoNombre;
+    std::cout << "\nIngrese el nuevo nombre para la categoria: ";
+    std::cin.ignore();
+    std::getline(std::cin, nuevoNombre);
+    return nuevoNombre;
 }

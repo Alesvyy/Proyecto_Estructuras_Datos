@@ -1,14 +1,7 @@
-
-#include "menu.h"
+#include "Menu.h"
 
 int main() {
-
-
-
     Menu menu;
-    //menu.mostrarMenu();
-    menu.mostrarMenuColas();
-
-
+    menu.mostrarMenu();
     return 0;
 }

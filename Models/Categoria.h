@@ -1,35 +1,19 @@
-//
-// Created by jl568 on 10/14/2024.
-//
-
 #ifndef CATEGORIA_H
 #define CATEGORIA_H
-#include<string>
-using namespace std;
 
-
+#include <string>
 
 class Categoria {
 private:
-    string descricion;
-    string nombre;
+    std::string nombre;
 
 public:
-    Categoria();
-    Categoria(string nombre, string descripcion);
+    // Constructor
+    Categoria(const std::string& nombre);
 
-    string getDescripcion();
-    void setDescripcion(string pDescripcion);
-
-    string getNombre();
-    void setNombre(string pNombre);
-
-
-
-
-
+    // Getter y setter
+    std::string getNombre() const;
+    void setNombre(const std::string& nuevoNombre);
 };
 
-
-
-#endif //CATEGORÍA_H
+#endif // CATEGORIA_H

@@ -95,4 +95,3 @@ void Cola::listarCola() {
         std::cout << datos[i]+"\n";
     }
 }
-

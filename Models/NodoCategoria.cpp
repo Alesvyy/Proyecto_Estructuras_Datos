@@ -1,28 +1,15 @@
-//
-// Created by kmq06 on 11/18/2024.
-//
-
 #include "NodoCategoria.h"
 
-NodoCategoria::NodoCategoria(Categoria *categoria) {
-    setCategoria(categoria);
-    setSiguiente(nullptr);
-}
+NodoCategoria::NodoCategoria(Categoria categoria) : categoria(categoria), siguiente(nullptr) {}
 
-
-Categoria *NodoCategoria::getCategoria() {
+Categoria NodoCategoria::getCategoria() const {
     return categoria;
 }
 
-void NodoCategoria::setCategoria(Categoria *categoria) {
-    this->categoria = categoria;
+NodoCategoria* NodoCategoria::getSiguiente() const {
+    return siguiente;
 }
 
-
-NodoCategoria *NodoCategoria::getSiguiente() {
-    return siguienteCategoria;
-}
-
-void NodoCategoria::setSiguiente(NodoCategoria *siguiente) {
-    siguienteCategoria = siguiente;
+void NodoCategoria::setSiguiente(NodoCategoria* siguiente) {
+    this->siguiente = siguiente;
 }

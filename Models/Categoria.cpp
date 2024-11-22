@@ -1,22 +1,14 @@
-//
-// Created by jl568 on 10/14/2024.
-//
-
 #include "Categoria.h"
 
-Categoria::Categoria(string nombre, string descripcion) {
-    setNombre(nombre);
-    setDescripcion(descripcion);
-}
+// Constructor
+Categoria::Categoria(const std::string& nombre) : nombre(nombre) {}
 
-string Categoria::getNombre() {
+// Getter
+std::string Categoria::getNombre() const {
     return nombre;
 }
 
-void Categoria::setDescripcion(string pDescripcion) {
-    descricion = pDescripcion;
-}
-
-void Categoria::setNombre(string pNombre) {
-    nombre = pNombre;
+// Setter
+void Categoria::setNombre(const std::string& nuevoNombre) {
+    nombre = nuevoNombre;
 }

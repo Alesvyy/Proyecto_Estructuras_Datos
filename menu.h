@@ -1,20 +1,27 @@
 #ifndef MENU_H
 #define MENU_H
-#include "PracticaColas/Cola.h"
-#include "Models/Producto.h"
+
+#include <iostream>
 #include <vector>
+#include <string>
+#include "Categoria.h"
 
 class Menu {
+private:
+    std::vector<Categoria> categorias;
+
 public:
     Menu();
-    void mostrarMenu();
-    void mostrarMenuColas();
-    void agregarProducto();
-    void verProductos();
 
-private:
-    std::vector<Producto> productos;
-    Cola cola;
+    void mostrarMenu();
+    void manejarOpciones();
+    void agregarCategoria();
+    void mostrarCategorias();
+    void modificarCategoria();
+    void eliminarCategoria();
+
+    int obtenerNumeroCategoria();
+    std::string obtenerNuevoNombre();
 };
 
 #endif // MENU_H

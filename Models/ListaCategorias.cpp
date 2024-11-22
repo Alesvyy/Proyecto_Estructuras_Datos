@@ -1,127 +1,21 @@
-//
-// Created by kmq06 on 11/18/2024.
-//
-using namespace std;
-#include <iostream>
+// ListaCategorias.cpp
 #include "ListaCategorias.h"
 
-ListaCategorias::ListaCategorias() {
-    head = nullptr;
+void ListaCategorias::agregarCategoria(const Categoria& categoria) {
+    categorias.push_back(categoria);
 }
 
-ListaCategorias::~ListaCategorias() {
-    NodoCategoria* current = head;
-    NodoCategoria* next;
-    while (current != nullptr) {
-        next = current->getSiguiente();
-        delete current;
-        current = next;
-    }
-    head = nullptr;
-}
-
-void ListaCategorias::setHead(NodoCategoria *nuevoHead) {
-    head = nuevoHead;
-}
-
-void ListaCategorias::agregarCategoria(Categoria *categoria) {
-    if (!hayRepetidos(categoria->getNombre())) {
-        NodoCategoria* nodoCategoriaNueva = new NodoCategoria(categoria);
-
-        if (head == nullptr) {
-            setHead(nodoCategoriaNueva);
-        } else {
-            NodoCategoria* temp = head;
-            while (temp-> getSiguiente() != nullptr) {
-                temp = temp-> getSiguiente();
-            }
-            temp->setSiguiente(nodoCategoriaNueva);
-        }
-        cout <<"Se ha agregado la categoria "<< categoria->getNombre() << endl;
-
+void ListaCategorias::listarCategorias() const {
+    if (categorias.empty()) {
+        std::cout << "No hay categorias disponibles\n";
+        std::cout << "\n";
     } else {
-        cout <<"Ya existe esta categoria"<< endl;
-    }
-
-}
-
-NodoCategoria* ListaCategorias::buscarCategoria(string nombreCategoria) {
-    NodoCategoria* temp = head;
-
-    while (temp != nullptr) {
-        if(temp->getCategoria()->getNombre() == nombreCategoria) {
-            return temp;
+        for (const auto& categoria : categorias) {
+            std::cout << categoria.getNombre() << "\n";
         }
-        temp = temp->getSiguiente();
     }
-    return temp;
-}
-NodoCategoria* ListaCategorias::buscarNodoAnterior(string nombreCategoria) {
-    if(head == nullptr) {
-        return nullptr;
-    }
-    NodoCategoria* temp = head;
-
-    while (temp->getSiguiente() != nullptr) {
-        if(temp->getSiguiente()->getCategoria()->getNombre() == nombreCategoria) {
-            return temp;
-        }
-        temp = temp->getSiguiente();
-    }
-    return nullptr;
 }
 
-
-void ListaCategorias::eliminarCategoria(string nombreCategoria) {
-    if(head == nullptr){
-        cout << "La lista esta vacia" << endl;
-        return;
-    }
-    if (head->getCategoria()->getNombre() == nombreCategoria){
-        NodoCategoria* temp = head;
-        head = head->getSiguiente();
-        delete temp;
-        cout << "La categoria " << nombreCategoria << " se ha eliminado" << endl;
-        return;
-    }
-    NodoCategoria* temp = buscarNodoAnterior(nombreCategoria);
-    if (temp != nullptr) {
-        NodoCategoria* nodoObjetivo = temp->getSiguiente();
-        temp->setSiguiente(nodoObjetivo->getSiguiente());
-        delete nodoObjetivo;
-        cout << "La categoria " << nombreCategoria << " se ha eliminado" << endl;
-
-    } else {
-        cout << "No se encontro la categoria " << nombreCategoria << endl;
-    }
-
+std::vector<Categoria> ListaCategorias::getCategorias() const {
+    return categorias;
 }
-
-void ListaCategorias::display() {
-    if (head == nullptr) {
-        cout << "La lista está vacía.\n";
-        return;
-    }
-
-    NodoCategoria* temp = head;
-    while (temp != nullptr) {
-        cout << temp->getCategoria()->getNombre() << " -> ";
-        temp = temp->getSiguiente();
-    }
-    cout << "nullptr\n";
-}
-
-bool ListaCategorias::hayRepetidos(string nombreCategoria) {
-    bool repetido = false;
-    NodoCategoria* temp = head;
-
-    while (temp != nullptr && !repetido) {
-        if (temp->getCategoria()->getNombre() == nombreCategoria) {
-            repetido = true;
-        }
-        temp = temp->getSiguiente();
-    }
-    return repetido;
-}
-
-

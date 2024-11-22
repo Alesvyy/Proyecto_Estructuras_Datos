@@ -1,26 +1,17 @@
-//
-// Created by kmq06 on 11/18/2024.
-//
-
 #ifndef NODOCATEGORIA_H
 #define NODOCATEGORIA_H
-#include "Categoria.h"
 
+#include "Categoria.h"
 
 class NodoCategoria {
 private:
-    Categoria* categoria;
-    NodoCategoria *siguienteCategoria;
-
+    Categoria categoria;
+    NodoCategoria* siguiente;
 public:
-    NodoCategoria(Categoria* categoria);
+    NodoCategoria(Categoria categoria);
+    Categoria getCategoria() const;
+    NodoCategoria* getSiguiente() const;
     void setSiguiente(NodoCategoria* siguiente);
-    NodoCategoria* getSiguiente();
-    Categoria* getCategoria();
-    void setCategoria(Categoria* categoria);
-
 };
 
-
-
-#endif //NODOCATEGORIA_H
+#endif // NODOCATEGORIA_H

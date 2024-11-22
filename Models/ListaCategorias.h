@@ -1,34 +1,21 @@
-//
-// Created by kmq06 on 11/18/2024.
-//
-
+// ListaCategorias.h
 #ifndef LISTACATEGORIAS_H
 #define LISTACATEGORIAS_H
-#include "Categoria.h"
-#include "NodoCategoria.h"
 
+#include "Categoria.h"
+#include <vector>
+#include <iostream>
 
 class ListaCategorias {
-    public:
-        ListaCategorias();
-        ~ListaCategorias();
+public:
+    void agregarCategoria(const Categoria& categoria);
 
-        void agregarCategoria(Categoria* categoria);
-        NodoCategoria* buscarCategoria(string nombreCategoria);
-        NodoCategoria* buscarNodoAnterior(string nombreCategoria);
-        void eliminarCategoria(string nombreCategoria);
-        NodoCategoria* getHead();
-        void display();
+    void listarCategorias() const;
 
-    private:
-        NodoCategoria* head;
-        bool hayRepetidos(string nombreCategoria);
-        void setHead(NodoCategoria* nuevoHead);
+    std::vector<Categoria> getCategorias() const;
 
-
-
+private:
+    std::vector<Categoria> categorias;
 };
 
-
-
-#endif //LISTACATEGORIAS_H
+#endif
