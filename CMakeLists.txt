@@ -23,8 +23,4 @@ add_executable(ProyectoEstructurasDeDatos
         Models/NodoCategoria.h
         Models/Producto.cpp
         Models/Producto.h
-        Models/NodoProducto.cpp
-        Models/NodoProducto.h
-        Models/ListaProductos.cpp
-        Models/ListaProductos.h
 )

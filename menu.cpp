@@ -62,7 +62,8 @@ void Menu::eliminarCategoria() {
 }
 
 void Menu::agregarCategoria() {
-    std::string nombre;
+    std::string nombre, descripcion;
+
     std::cout << "\nIngrese el nombre de la categoria: ";
     std::cin.ignore();
     std::getline(std::cin, nombre);
@@ -74,26 +75,25 @@ void Menu::agregarCategoria() {
         }
     }
 
-    Categoria nuevaCategoria(nombre);
+    std::cout << "Ingrese la descripcion de la categoria: ";
+    std::getline(std::cin, descripcion);
+
+    Categoria nuevaCategoria(nombre, descripcion);
     categorias.push_back(nuevaCategoria);
     std::cout << "Categoria '" << nombre << "' agregada correctamente.\n";
 }
 
-
 void Menu::mostrarCategorias() {
     if (categorias.empty()) {
-        std::cout << "\n";
-        std::cout << "No hay categorias disponibles.\n";
+        std::cout << "\nNo hay categorias disponibles.\n";
     } else {
-        std::cout << "\n";
-        std::cout << "Categorias disponibles:\n";
-        std::cout << "\n";
-        std::cout << "---------------\n";
+        std::cout << "\nCategorias disponibles:\n";
         for (size_t i = 0; i < categorias.size(); ++i) {
-            std::cout << i + 1 << ". " << categorias[i].getNombre() << "\n";
             std::cout << "---------------\n";
+            std::cout << i + 1 << ". Nombre: " << categorias[i].getNombre() << "\n";
+            std::cout << "   Descripcion: " << categorias[i].getDescripcion() << "\n";
         }
-
+        std::cout << "---------------\n";
     }
 }
 
@@ -111,20 +111,38 @@ void Menu::modificarCategoria() {
         numeroCategoria = obtenerNumeroCategoria();
     }
 
+    std::cout << "\nCategoria seleccionada:\n";
+    std::cout << "Nombre: " << categorias[numeroCategoria - 1].getNombre() << "\n";
+    std::cout << "Descripcion: " << categorias[numeroCategoria - 1].getDescripcion() << "\n";
+
     std::string nuevoNombre = obtenerNuevoNombre();
+    categorias[numeroCategoria - 1].setNombre(nuevoNombre);
 
-    if (numeroCategoria >= 1 && numeroCategoria <= categorias.size()) {
-        categorias[numeroCategoria - 1].setNombre(nuevoNombre);
-        std::cout << "\nCategoria modificada correctamente.\n";
-    } else {
-        std::cout << "\nIndice fuera de rango.\n";
-    }
+    std::cout << "\nNombre modificado correctamente.\n";
+
+    std::string respuesta;
+    std::cout << "\nDeseas modificar la descripcion? (Y/N): ";
+    std::cin >> respuesta;
+
+    if (respuesta == "Y" || respuesta == "y" || respuesta == "S" || respuesta == "s" ||
+        respuesta == "Yes" || respuesta == "yes" || respuesta == "Si" || respuesta == "si") {
+
+        std::cin.ignore();
+        std::string nuevaDescripcion;
+        std::cout << "\nIngrese la nueva descripcion: ";
+        std::getline(std::cin, nuevaDescripcion);
+
+        categorias[numeroCategoria - 1].setDescripcion(nuevaDescripcion);
+
+        std::cout << "\nDescripcion modificada correctamente.\n";
+        } else {
+            std::cout << "\nDescripcion no modificada.\n";
+        }
 }
-
 
 int Menu::obtenerNumeroCategoria() {
     int numeroCategoria;
-    std::cout << "\nIngrese el numero de la categoria que desea eliminar: ";
+    std::cout << "\nIngrese el numero de la categoria que desea usar: ";
     std::cin >> numeroCategoria;
 
     while (std::cin.fail()) {

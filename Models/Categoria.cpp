@@ -1,14 +1,22 @@
 #include "Categoria.h"
 
-// Constructor
-Categoria::Categoria(const std::string& nombre) : nombre(nombre) {}
+Categoria::Categoria() = default;
 
-// Getter
+Categoria::Categoria(std::string nombre, std::string descripcion)
+    : nombre(std::move(nombre)), descricion(std::move(descripcion)) {}
+
+std::string Categoria::getDescripcion() const {
+    return descricion;
+}
+
+void Categoria::setDescripcion(const std::string& pDescripcion) {
+    descricion = pDescripcion;
+}
+
 std::string Categoria::getNombre() const {
     return nombre;
 }
 
-// Setter
-void Categoria::setNombre(const std::string& nuevoNombre) {
-    nombre = nuevoNombre;
+void Categoria::setNombre(const std::string& pNombre) {
+    nombre = pNombre;
 }

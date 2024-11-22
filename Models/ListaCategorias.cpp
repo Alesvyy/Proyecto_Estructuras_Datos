@@ -1,5 +1,5 @@
-// ListaCategorias.cpp
 #include "ListaCategorias.h"
+#include <iostream>
 
 void ListaCategorias::agregarCategoria(const Categoria& categoria) {
     categorias.push_back(categoria);
@@ -11,7 +11,8 @@ void ListaCategorias::listarCategorias() const {
         std::cout << "\n";
     } else {
         for (const auto& categoria : categorias) {
-            std::cout << categoria.getNombre() << "\n";
+            std::cout << "Nombre: " << categoria.getNombre() << ", ";
+            std::cout << "Descripcion: " << categoria.getDescripcion() << "\n";
         }
     }
 }

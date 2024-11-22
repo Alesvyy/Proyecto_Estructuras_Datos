@@ -5,15 +5,18 @@
 
 class Categoria {
 private:
+    std::string descricion;
     std::string nombre;
 
 public:
-    // Constructor
-    Categoria(const std::string& nombre);
+    Categoria();
+    Categoria(std::string nombre, std::string descripcion);
 
-    // Getter y setter
+    std::string getDescripcion() const;
+    void setDescripcion(const std::string& pDescripcion);
+
     std::string getNombre() const;
-    void setNombre(const std::string& nuevoNombre);
+    void setNombre(const std::string& pNombre);
 };
 
 #endif // CATEGORIA_H

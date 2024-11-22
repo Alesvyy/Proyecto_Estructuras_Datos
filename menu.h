@@ -22,6 +22,7 @@ public:
 
     int obtenerNumeroCategoria();
     std::string obtenerNuevoNombre();
+
 };
 
 #endif // MENU_H
