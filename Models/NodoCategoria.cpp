@@ -13,3 +13,4 @@ NodoCategoria* NodoCategoria::getSiguiente() const {
 void NodoCategoria::setSiguiente(NodoCategoria* siguiente) {
     this->siguiente = siguiente;
 }
+
