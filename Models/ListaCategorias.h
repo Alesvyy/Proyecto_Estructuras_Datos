@@ -19,6 +19,7 @@ class ListaCategorias {
         void eliminarCategoria(string nombreCategoria);
         NodoCategoria* getHead();
         void display();
+        void modificarCategoria(const std::string& nombreActual, const std::string& nuevoNombre);
 
     private:
         NodoCategoria* head;
