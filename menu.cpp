@@ -102,7 +102,7 @@ void Menu::agregarProducto() {
     std::cin.ignore();
     std::getline(std::cin, descripcion);
 
-    Producto nuevoProducto(nombre, precio, descripcion);
+    Producto nuevoProducto(nombre, descripcion, precio); //Estan alrevez los valores
     productos.push_back(nuevoProducto);
 
     std::cout << "Producto agregado: " << nombre << "\n";

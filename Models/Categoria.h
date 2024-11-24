@@ -32,4 +32,4 @@ public:
 
 
 
-#endif //CATEGORÍA_H
+#endif //CATEGORIA_H
