@@ -17,4 +17,6 @@ add_executable(ProyectoEstructurasDeDatos
         Models/ListaCategorias.h
         Models/NodoCategoria.cpp
         Models/NodoCategoria.h
+        Models/BuscarProducto.cpp
+        Models/BuscarProducto.h
 )
