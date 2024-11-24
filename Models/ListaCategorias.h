@@ -16,6 +16,7 @@ class ListaCategorias {
         void agregarCategoria(Categoria* categoria);
         NodoCategoria* buscarCategoria(string nombreCategoria);
         NodoCategoria* buscarNodoAnterior(string nombreCategoria);
+        void modificarCategoria(const std::string& nombreActual, const std::string& nuevoNombre);
         void eliminarCategoria(string nombreCategoria);
         NodoCategoria* getHead();
         void display();
