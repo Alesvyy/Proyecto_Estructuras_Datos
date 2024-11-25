@@ -21,6 +21,4 @@ public:
 
 };
 
-
-
 #endif //NODOCATEGORIA_H

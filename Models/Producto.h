@@ -5,17 +5,19 @@
 #include <iostream>
 using namespace std;
 
-
-
 class Producto {
-public:
-    // Constructor
-    Producto(const std::string& nombre, double precio, const std::string& descripcion);
 
-    // Getters
-    std::string getNombre() const;
-    double getPrecio() const;
-    std::string getDescripcion() const;
+public:
+    Producto();
+    Producto(string nombre, string descripcion, double precio);
+
+    string getNombre();
+    string getDescripcion();
+    double getPrecio();
+
+    void setDescripcion(string pDescripcion);
+    void setNombre(string pNombre);
+    void setPrecio(double pPrecio);
 
 private:
     string nombre;
@@ -33,8 +35,5 @@ private:
     void modificarProd(){}
 
 };
-
-
-
 
 #endif //PRODUCTO_H
