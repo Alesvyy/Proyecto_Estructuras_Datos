@@ -45,6 +45,22 @@ void ListaCategorias::agregarCategoria(Categoria *categoria) {
 
 }
 
+
+void ListaCategorias::modificarCategoria(const string& nombreActual, const string& nuevoNombre) {
+
+    NodoCategoria* nodo = buscarCategoria(nombreActual);
+
+    if (nodo == nullptr) {
+        cout << "La categoría con el nombre \"" << nombreActual << "\" no existe." << endl;
+        return;
+    }
+
+    nodo->getCategoria()->setNombre(nuevoNombre);
+    cout << "El nombre de la categoría ha sido modificado correctamente a \"" << nuevoNombre << "\"." << endl;
+}
+
+
+
 NodoCategoria* ListaCategorias::buscarCategoria(string nombreCategoria) {
     NodoCategoria* temp = head;
 
