@@ -16,6 +16,8 @@ public:
     void agregarProducto(Producto* producto);
     NodoProducto* buscarProducto(string nombreProducto);
     NodoProducto* buscarNodoAnterior(string nombreProducto);
+    void modificarProducto(const string& nombreActual, const string& nuevoNombre, const string& nuevaDescripcion, const
+    double& nuevoPrecio);
     void eliminarProducto(string nombreProducto);
     NodoProducto* getHead();
     void display();

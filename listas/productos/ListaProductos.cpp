@@ -42,6 +42,25 @@ void ListaProductos::agregarProducto(Producto *producto) {
     }
 }
 
+
+void ListaProductos::modificarProducto(const string& nombreActual, const string& nuevoNombre, const string& nuevaDescripcion, const
+    double& nuevoPrecio) {
+
+    NodoProducto* nodo = buscarProducto(nombreActual);
+
+    if (nodo == nullptr) {
+        cout << "El producto con el nombre \"" << nombreActual << "\" no existe." << endl;
+        return;
+    }
+
+    nodo->getProducto()->setNombre(nuevoNombre);
+    nodo->getProducto()->setDescripcion(nuevaDescripcion);
+    nodo->getProducto()->setPrecio(nuevoPrecio);
+
+    cout << "El producto ha sido modificado correctamente " << endl;
+}
+
+
 NodoProducto* ListaProductos::buscarProducto(string nombreProducto) {
      NodoProducto* temp = head;
      while (temp != nullptr) {
