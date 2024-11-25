@@ -13,7 +13,6 @@ public:
     void verProductos();
 
 private:
-    std::vector<Producto> productos;
     Cola cola;
 };
 

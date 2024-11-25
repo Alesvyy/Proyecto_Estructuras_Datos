@@ -4,7 +4,7 @@
 
 #ifndef LISTACATEGORIAS_H
 #define LISTACATEGORIAS_H
-#include "Categoria.h"
+#include "../../Models/Categoria.h"
 #include "NodoCategoria.h"
 
 

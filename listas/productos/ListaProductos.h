@@ -6,7 +6,7 @@
 #define LISTAPRODUCTOS_H
 
 #include "NodoProducto.h"
-#include "Producto.h"
+#include "../../Models/Producto.h"
 
 class ListaProductos {
 public:

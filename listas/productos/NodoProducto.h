@@ -3,7 +3,7 @@
 //
 #ifndef NODOPRODUCTO_H
 #define NODOPRODUCTO_H
-#include "Producto.h"
+#include "../../Models/Producto.h"
 
 class NodoProducto {
 

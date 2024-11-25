@@ -4,7 +4,7 @@
 
 #ifndef NODOCATEGORIA_H
 #define NODOCATEGORIA_H
-#include "Categoria.h"
+#include "../../Models/Categoria.h"
 
 
 class NodoCategoria {
