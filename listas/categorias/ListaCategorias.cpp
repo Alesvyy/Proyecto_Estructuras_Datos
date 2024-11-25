@@ -56,7 +56,7 @@ void ListaCategorias::modificarCategoria(const string& nombreActual, const strin
     }
 
     nodo->getCategoria()->setNombre(nuevoNombre);
-    cout << "El nombre de la categoría ha sido modificado correctamente a \"" << nuevoNombre << "\"." << endl;
+    cout << "El nombre de la categoria ha sido modificado correctamente a \"" << nuevoNombre << "\"." << endl;
 }
 
 
