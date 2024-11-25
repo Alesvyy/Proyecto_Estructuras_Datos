@@ -19,6 +19,7 @@ public:
     void eliminarProducto(string nombreProducto);
     NodoProducto* getHead();
     void display();
+    void modificarProducto(const std::string& nombreActual, const std::string& nuevoNombre, double nuevoPrecio);
 
 
     private:

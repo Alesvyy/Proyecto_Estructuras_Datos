@@ -91,16 +91,23 @@ void ListaProductos::eliminarProducto(string nombreProducto) {
 }
 
 void ListaProductos::display() {
-     if (head == nullptr) {
-         cout << "La lista esta vacia.\n";
-         return;
-     }
-     NodoProducto* temp = head;
-     while (temp != nullptr) {
-         cout << temp->getProducto()->getNombre() << " -> ";
-         temp = temp->getSiguiente();
-     }
-     cout << "nullptr\n";
+    if (head == nullptr) {
+        cout << "La lista esta vacia.\n";
+        return;
+    }
+
+    NodoProducto* temp = head;
+    int contador = 1;
+    while (temp != nullptr) {
+
+        cout << contador << ". "
+        << temp->getProducto()->getNombre()
+        << " - Precio: " << temp->getProducto()->getPrecio() << " Colones" << "\n";
+
+        temp = temp->getSiguiente();
+        contador++;
+
+    }
 }
 
 bool ListaProductos::hayRepetidos(string nombreProducto) {
@@ -114,4 +121,25 @@ bool ListaProductos::hayRepetidos(string nombreProducto) {
          temp = temp->getSiguiente();
      }
      return repetido;
+}
+
+void ListaProductos::modificarProducto(const std::string& nombreActual, const std::string& nuevoNombre, double nuevoPrecio) {
+    NodoProducto* nodo = buscarProducto(nombreActual);
+
+    if (nodo == nullptr) {
+        std::cout << "El producto con el nombre \"" << nombreActual << "\" no existe." << std::endl;
+        return;
+    }
+
+    if (hayRepetidos(nuevoNombre)) {
+        std::cout << "Ya existe un producto con el nombre \"" << nuevoNombre << "\". No se puede modificar." << std::endl;
+        return;
+    }
+
+    nodo->getProducto()->setNombre(nuevoNombre);
+    nodo->getProducto()->setPrecio(nuevoPrecio);
+
+    std::cout << "El producto ha sido modificado correctamente a:\n"
+           << "Nombre: \"" << nuevoNombre << "\"\n"
+           << "Precio: " << nuevoPrecio << " Colones" << std::endl;
 }

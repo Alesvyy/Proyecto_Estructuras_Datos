@@ -17,7 +17,7 @@ public:
     void agregarCategoria();
     void eliminarCategoria();
     void verCategoria();
-    //void modificarProducto();
+    void modificarProducto();
     void eliminarProducto();
     void modificarCategoria();
 

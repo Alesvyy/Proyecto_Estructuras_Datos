@@ -51,7 +51,7 @@ void ListaCategorias::modificarCategoria(const string& nombreActual, const strin
     NodoCategoria* nodo = buscarCategoria(nombreActual);
 
     if (nodo == nullptr) {
-        cout << "La categoría con el nombre \"" << nombreActual << "\" no existe." << endl;
+        cout << "La categoria con el nombre \"" << nombreActual << "\" no existe." << endl;
         return;
     }
 
@@ -115,16 +115,18 @@ void ListaCategorias::eliminarCategoria(string nombreCategoria) {
 
 void ListaCategorias::display() {
     if (head == nullptr) {
-        cout << "La lista está vacía.\n";
+        cout << "La lista esta vacia.\n";
         return;
     }
 
     NodoCategoria* temp = head;
+    int contador = 1;
     while (temp != nullptr) {
-        cout << temp->getCategoria()->getNombre() << " -> ";
+
+        cout << contador << ". " << temp->getCategoria()->getNombre() << "\n";
         temp = temp->getSiguiente();
+        contador++;
     }
-    cout << "nullptr\n";
 }
 
 bool ListaCategorias::hayRepetidos(string nombreCategoria) {

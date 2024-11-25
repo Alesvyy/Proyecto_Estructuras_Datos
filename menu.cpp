@@ -1,7 +1,7 @@
 #include "menu.h"
 #include <iostream>
 #include <vector>
-
+#include <limits>
 
 Menu::Menu() {}
 
@@ -15,26 +15,31 @@ void Menu::mostrarMenu() {
         std::cout << "3. Modificar Producto\n";
         std::cout << "4. Eliminar Producto\n";
         std::cout << "5. Agregar Categoria\n";
-        std::cout << "6. ver Categorias\n";
+        std::cout << "6. Ver Categorias\n";
         std::cout << "7. Modificar Categoria\n";
         std::cout << "8. Eliminar Categoria\n";
 
         std::cout << "0. Salir\n";
         std::cout << "\n";
         std::cout << "Seleccione una opcion: ";
-        std::cin >> opcion;
+
+        if (!(std::cin >> opcion)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Entrada invalida. Por favor, intentelo mas tarde.\n";
+            continue;
+        }
 
         switch (opcion) {
             case 1:
-                 agregarProducto();
+                agregarProducto();
             break;
             case 2:
-                 verProductos();
+                verProductos();
             break;
-            /*case 3:
+            case 3:
                 modificarProducto();
             break;
-            */
             case 4:
                 eliminarProducto();
             break;
@@ -49,11 +54,12 @@ void Menu::mostrarMenu() {
             break;
             case 8:
                 eliminarCategoria();
+            break;
             case 0:
                 std::cout << "Saliendo...\n";
             break;
             default:
-                std::cout << "Opcion no válida. Intente de nuevo.\n";
+                std::cout << "Opcion no valida. Intente de nuevo.\n";
         }
     } while (opcion != 0);
 }
@@ -122,8 +128,18 @@ void Menu::agregarProducto() {
     std::cout << "Ingrese el nombre del producto: ";
     std::cin >> nombre;
 
-    std::cout << "Ingrese el precio del producto: ";
-    std::cin >> precio;
+    while (true) {
+        std::cout << "Ingrese el precio del producto: ";
+        std::cin >> precio;
+
+        if (std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Entrada invalida. Por favor, ingrese un numero valido para el precio.\n";
+        } else {
+            break;
+        }
+    }
 
     std::cout << "Ingrese la descripcion del producto: ";
     std::cin.ignore();
@@ -187,16 +203,29 @@ void Menu::modificarCategoria() {
     listaCategorias.modificarCategoria(nombre,nuevoNombre);
 
 }
-/*
+
 void Menu::modificarProducto() {
-    std::string nombre,nuevoNombre;
+    std::string nombreActual, nuevoNombre;
+    double nuevoPrecio;
 
     std::cout << "Ingrese el nombre del producto a modificar: ";
-    std::cin >> nombre;
+    std::cin >> nombreActual;
 
     std::cout << "Ingrese el nuevo nombre del producto: ";
     std::cin >> nuevoNombre;
 
-    listaProductos.modificarProducto(nombre, nuevoNombre);
+    while (true) {
+        std::cout << "Ingrese el nuevo precio del producto: ";
+        std::cin >> nuevoPrecio;
+
+        if (std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Entrada invalida. Por favor, ingrese un numero valido para el precio.\n";
+        } else {
+            break;
+        }
+    }
+
+    listaProductos.modificarProducto(nombreActual, nuevoNombre, nuevoPrecio);
 }
-*/
