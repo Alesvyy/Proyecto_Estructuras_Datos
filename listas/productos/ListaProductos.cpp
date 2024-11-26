@@ -24,23 +24,20 @@ void ListaProductos::setHead(NodoProducto *nuevoHead) {
  head = nuevoHead;
 }
 
-void ListaProductos::agregarProducto(Producto *producto) {
-    if (!hayRepetidos(producto->getNombre())) {
-        NodoProducto* nodoProductoNuevo = new NodoProducto(producto);
-        if (head == nullptr) {
-            setHead(nodoProductoNuevo);
-        } else {
-            NodoProducto* temp = head;
-            while (temp->getSiguiente() != nullptr) {
-                temp = temp->getSiguiente();
-            }
-            temp->setSiguiente(nodoProductoNuevo);
-        }
-        cout << "Se ha agregado el producto " << producto->getNombre() << endl;
+void ListaProductos::agregarProducto(Producto* producto) {
+    NodoProducto* nodoProductoNuevo = new NodoProducto(producto);
+    if (head == nullptr) {
+        setHead(nodoProductoNuevo);
     } else {
-        cout << "Ya existe este producto" << endl;
+        NodoProducto* temp = head;
+        while (temp->getSiguiente() != nullptr) {
+            temp = temp->getSiguiente();
+        }
+        temp->setSiguiente(nodoProductoNuevo);
     }
+    std::cout << "Se ha agregado el producto " << producto->getNombre() << " exitosamente.\n";
 }
+
 
 NodoProducto* ListaProductos::buscarProducto(string nombreProducto) {
      NodoProducto* temp = head;
@@ -92,23 +89,24 @@ void ListaProductos::eliminarProducto(string nombreProducto) {
 
 void ListaProductos::display() {
     if (head == nullptr) {
-        cout << "La lista esta vacia.\n";
+        std::cout << "La lista esta vacia.\n";
         return;
     }
 
     NodoProducto* temp = head;
     int contador = 1;
-    while (temp != nullptr) {
 
-        cout << contador << ". "
-        << temp->getProducto()->getNombre()
-        << " - Precio: " << temp->getProducto()->getPrecio() << " Colones" << "\n";
+    while (temp != nullptr) {
+        std::cout << contador << ". "
+                  << temp->getProducto()->getNombre()
+                  << " - Precio: " << temp->getProducto()->getPrecio() << " Colones\n"
+                  << "   Descripcion: " << temp->getProducto()->getDescripcion() << "\n";
 
         temp = temp->getSiguiente();
         contador++;
-
     }
 }
+
 
 bool ListaProductos::hayRepetidos(string nombreProducto) {
      bool repetido = false;
