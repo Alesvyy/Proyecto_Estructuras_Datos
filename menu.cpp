@@ -122,13 +122,38 @@ void Menu::verCategoria() {
 }
 
 void Menu::eliminarProducto() {
-    string nombre;
+    if (listaProductos.contarProductos() == 0) {
+        cout << "La lista esta vacia. No hay productos para eliminar." << endl;
+        return;
+    }
 
-    cout << "Ingrese el nombre del Producto a eliminar: ";
-    cin >> nombre;
+    int numeroProducto;
+    cout << "Seleccione el numero del producto a eliminar: ";
+    cin >> numeroProducto;
 
-    listaProductos.eliminarProducto(nombre);
+    NodoProducto* producto = listaProductos.obtenerNodoPorNumero(numeroProducto);
+
+    if (producto != nullptr) {
+        cout << "Producto seleccionado: " << endl;
+        cout << "Nombre: " << producto->getProducto()->getNombre() << endl;
+        cout << "Precio: " << producto->getProducto()->getPrecio() << " Colones" << endl;
+        cout << "Descripcion: " << producto->getProducto()->getDescripcion() << endl;
+
+        char confirmacion;
+        cout << "Esta seguro de que desea eliminar este producto? (Y/N): ";
+        cin >> confirmacion;
+
+        if (confirmacion == 'Y' || confirmacion == 'y') {
+            listaProductos.eliminarProducto(producto->getProducto()->getNombre());
+            cout << "El producto ha sido eliminado." << endl;
+        } else {
+            cout << "Operacion cancelada. El producto no fue eliminado." << endl;
+        }
+    } else {
+        cout << "Numero de producto no valido. Intente nuevamente." << endl;
+    }
 }
+
 
 
 void Menu::modificarCategoria() {
@@ -145,17 +170,36 @@ void Menu::modificarCategoria() {
 }
 
 void Menu::modificarProducto() {
-    std::string nombreActual, nuevoNombre;
+    if (listaProductos.contarProductos() == 0) {
+        std::cout << "La lista esta vacia. No hay productos para modificar.\n";
+        return;
+    }
+
+    int numeroProducto;
+    std::string nuevoNombre, nuevaDescripcion;
     double nuevoPrecio;
 
-    std::cout << "Ingrese el nombre del producto a modificar: ";
-    std::cin >> nombreActual;
-
-    std::cout << "Ingrese el nuevo nombre del producto: ";
-    std::cin >> nuevoNombre;
+    listaProductos.display();
+    std::cout << "\nSeleccione el numero del producto que desea modificar: ";
 
     while (true) {
-        std::cout << "Ingrese el nuevo precio del producto: ";
+        std::cin >> numeroProducto;
+
+        if (std::cin.fail() || numeroProducto < 1 || numeroProducto > listaProductos.contarProductos()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Entrada invalida. Por favor, ingrese un numero valido entre 1 y " << listaProductos.contarProductos() << ".\n";
+        } else {
+            break;
+        }
+    }
+
+    std::cout << "Ingrese el nuevo nombre del producto: ";
+    std::cin.ignore();
+    std::getline(std::cin, nuevoNombre);
+
+    std::cout << "Ingrese el nuevo precio del producto: ";
+    while (true) {
         std::cin >> nuevoPrecio;
 
         if (std::cin.fail()) {
@@ -167,5 +211,16 @@ void Menu::modificarProducto() {
         }
     }
 
-    listaProductos.modificarProducto(nombreActual, nuevoNombre, nuevoPrecio);
+    std::cout << "Desea cambiar la descripcion? (Y/N): ";
+    char opcion;
+    std::cin >> opcion;
+    if (opcion == 'Y' || opcion == 'y') {
+        std::cout << "Ingrese la nueva descripcion del producto: ";
+        std::cin.ignore();
+        std::getline(std::cin, nuevaDescripcion);
+    } else {
+        nuevaDescripcion = listaProductos.obtenerNodoPorNumero(numeroProducto)->getProducto()->getDescripcion();
+    }
+
+    listaProductos.modificarProductoPorNumero(numeroProducto, nuevoNombre, nuevoPrecio, nuevaDescripcion);
 }

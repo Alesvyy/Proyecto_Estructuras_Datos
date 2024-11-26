@@ -21,7 +21,6 @@ public:
     void eliminarProducto();
     void modificarCategoria();
 
-
 private:
     Cola cola;
     ListaCategorias listaCategorias;

@@ -25,17 +25,21 @@ void ListaProductos::setHead(NodoProducto *nuevoHead) {
 }
 
 void ListaProductos::agregarProducto(Producto* producto) {
-    NodoProducto* nodoProductoNuevo = new NodoProducto(producto);
-    if (head == nullptr) {
-        setHead(nodoProductoNuevo);
-    } else {
-        NodoProducto* temp = head;
-        while (temp->getSiguiente() != nullptr) {
-            temp = temp->getSiguiente();
+    if (!hayRepetidos(producto->getNombre())) {
+        NodoProducto* nodoProductoNuevo = new NodoProducto(producto);
+        if (head == nullptr) {
+            head = nodoProductoNuevo;
+        } else {
+            NodoProducto* temp = head;
+            while (temp->getSiguiente() != nullptr) {
+                temp = temp->getSiguiente();
+            }
+            temp->setSiguiente(nodoProductoNuevo);
         }
-        temp->setSiguiente(nodoProductoNuevo);
+        std::cout << "Producto agregado exitosamente: " << producto->getNombre() << "\n";
+    } else {
+        std::cout << "Ya existe un producto con el nombre \"" << producto->getNombre() << "\".\n";
     }
-    std::cout << "Se ha agregado el producto " << producto->getNombre() << " exitosamente.\n";
 }
 
 NodoProducto* ListaProductos::buscarProducto(string nombreProducto) {
@@ -62,6 +66,25 @@ NodoProducto* ListaProductos::buscarNodoAnterior(string nombreProducto) {
      }
      return nullptr;
 }
+
+NodoProducto* ListaProductos::obtenerNodoPorNumero(int numero) {
+    if (head == nullptr) {
+        return nullptr;
+    }
+    NodoProducto* temp = head;
+    int contador = 1;
+
+    while (temp != nullptr) {
+        if (contador == numero) {
+            return temp;
+        }
+        temp = temp->getSiguiente();
+        contador++;
+    }
+    return nullptr;
+}
+
+
 
 void ListaProductos::eliminarProducto(string nombreProducto) {
      if (head == nullptr) {
@@ -94,30 +117,38 @@ void ListaProductos::display() {
 
     NodoProducto* temp = head;
     int contador = 1;
-
     while (temp != nullptr) {
         std::cout << contador << ". "
                   << temp->getProducto()->getNombre()
-                  << " - Precio: " << temp->getProducto()->getPrecio() << " Colones\n"
-                  << "   Descripcion: " << temp->getProducto()->getDescripcion() << "\n";
-
+                  << " - Precio: " << temp->getProducto()->getPrecio()
+                  << " Colones\n";
+        std::cout << "   Descripcion: " << temp->getProducto()->getDescripcion() << "\n";
         temp = temp->getSiguiente();
         contador++;
     }
 }
 
 
-bool ListaProductos::hayRepetidos(string nombreProducto) {
-     bool repetido = false;
-     NodoProducto* temp = head;
 
-     while (temp != nullptr && !repetido) {
-         if (temp->getProducto()->getNombre() == nombreProducto) {
-         repetido = true;
-         }
-         temp = temp->getSiguiente();
-     }
-     return repetido;
+bool ListaProductos::hayRepetidos(const std::string& nombre) {
+    NodoProducto* temp = head;
+    while (temp != nullptr) {
+        if (temp->getProducto()->getNombre() == nombre) {
+            return true;
+        }
+        temp = temp->getSiguiente();
+    }
+    return false;
+}
+
+int ListaProductos::contarProductos() const {
+    int contador = 0;
+    NodoProducto* temp = head;
+    while (temp != nullptr) {
+        contador++;
+        temp = temp->getSiguiente();
+    }
+    return contador;
 }
 
 void ListaProductos::modificarProducto(const std::string& nombreActual, const std::string& nuevoNombre, double nuevoPrecio) {
@@ -140,3 +171,27 @@ void ListaProductos::modificarProducto(const std::string& nombreActual, const st
            << "Nombre: \"" << nuevoNombre << "\"\n"
            << "Precio: " << nuevoPrecio << " Colones" << std::endl;
 }
+
+void ListaProductos::modificarProductoPorNumero(int numeroProducto, const std::string& nuevoNombre, double nuevoPrecio, const std::string& nuevaDescripcion) {
+    NodoProducto* nodo = obtenerNodoPorNumero(numeroProducto);
+
+    if (nodo == nullptr) {
+        std::cout << "El numero ingresado no corresponde a ningun producto.\n";
+        return;
+    }
+
+    if (hayRepetidos(nuevoNombre)) {
+        std::cout << "Ya existe un producto con el nombre \"" << nuevoNombre << "\". No se puede modificar.\n";
+        return;
+    }
+
+    nodo->getProducto()->setNombre(nuevoNombre);
+    nodo->getProducto()->setPrecio(nuevoPrecio);
+    nodo->getProducto()->setDescripcion(nuevaDescripcion);
+
+    std::cout << "El producto ha sido modificado correctamente:\n"
+              << "Nombre: \"" << nuevoNombre << "\"\n"
+              << "Precio: " << nuevoPrecio << " Colones\n"
+              << "Descripción: \"" << nuevaDescripcion << "\"\n";
+}
+

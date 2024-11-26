@@ -20,11 +20,14 @@ public:
     NodoProducto* getHead();
     void display();
     void modificarProducto(const std::string& nombreActual, const std::string& nuevoNombre, double nuevoPrecio);
+    void modificarProductoPorNumero(int numeroProducto, const std::string& nuevoNombre, double nuevoPrecio, const std::string& nuevaDescripcion);
+    int contarProductos() const;
+    NodoProducto* obtenerNodoPorNumero(int numero);
+    bool hayRepetidos(const std::string& nombre);
 
 
     private:
         NodoProducto* head;
-    bool hayRepetidos(string nombreProducto);
     void setHead(NodoProducto* nuevoHead);
 
 };
