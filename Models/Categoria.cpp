@@ -25,3 +25,6 @@ ListaProductos *Categoria::getListaProductos() {
     return listaProductos;
 }
 
+string Categoria::getDescripcion() {
+    return descricion;
+}

@@ -8,8 +8,6 @@
 #include "../listas/productos/ListaProductos.h"
 using namespace std;
 
-
-
 class Categoria {
 private:
     string descricion;
@@ -28,12 +26,6 @@ public:
 
     ListaProductos* getListaProductos();
 
-
-
-
-
 };
-
-
 
 #endif //CATEGORIA_H

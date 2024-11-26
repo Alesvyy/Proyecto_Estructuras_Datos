@@ -64,8 +64,6 @@ void Menu::mostrarMenu() {
     } while (opcion != 0);
 }
 
-
-
 void Menu::agregarProducto() {
     std::string nombre, descripcion;
     double precio;
@@ -91,82 +89,6 @@ void Menu::agregarProducto() {
 
 void Menu::verProductos() {
     listaProductos.display();
-}
-void Menu::agregarCategoria() {
-    std::string nombre;
-    std::string descripcion;
-
-    std::cout << "Ingrese el nombre de la categoria: ";
-    std::cin >> nombre;
-
-    std::cout << "Ingrese la descripcion de la categoria: ";
-    std::cin.ignore();
-    std::getline(std::cin, descripcion);
-
-    Categoria* categoria = new Categoria(nombre, descripcion);
-    listaCategorias.agregarCategoria(categoria);
-
-}
-
-void Menu::eliminarCategoria() {
-    string nombre;
-
-    cout << "Ingrese el nombre de la categoria a eliminar: ";
-    cin >> nombre;
-
-    listaCategorias.eliminarCategoria(nombre);
-}
-
-void Menu::verCategoria() {
-    listaCategorias.display();
-}
-
-void Menu::eliminarProducto() {
-    if (listaProductos.contarProductos() == 0) {
-        cout << "La lista esta vacia. No hay productos para eliminar." << endl;
-        return;
-    }
-
-    int numeroProducto;
-    cout << "Seleccione el numero del producto a eliminar: ";
-    cin >> numeroProducto;
-
-    NodoProducto* producto = listaProductos.obtenerNodoPorNumero(numeroProducto);
-
-    if (producto != nullptr) {
-        cout << "Producto seleccionado: " << endl;
-        cout << "Nombre: " << producto->getProducto()->getNombre() << endl;
-        cout << "Precio: " << producto->getProducto()->getPrecio() << " Colones" << endl;
-        cout << "Descripcion: " << producto->getProducto()->getDescripcion() << endl;
-
-        char confirmacion;
-        cout << "Esta seguro de que desea eliminar este producto? (Y/N): ";
-        cin >> confirmacion;
-
-        if (confirmacion == 'Y' || confirmacion == 'y') {
-            listaProductos.eliminarProducto(producto->getProducto()->getNombre());
-            cout << "El producto ha sido eliminado." << endl;
-        } else {
-            cout << "Operacion cancelada. El producto no fue eliminado." << endl;
-        }
-    } else {
-        cout << "Numero de producto no valido. Intente nuevamente." << endl;
-    }
-}
-
-
-
-void Menu::modificarCategoria() {
-    std::string nombre,nuevoNombre;
-
-    std::cout << "Ingrese el nombre de la categoria a modificar: ";
-    std::cin >> nombre;
-
-    std::cout << "Ingrese el nuevo nombre de la categoria: ";
-    std::cin >> nuevoNombre;
-
-    listaCategorias.modificarCategoria(nombre,nuevoNombre);
-
 }
 
 void Menu::modificarProducto() {
@@ -224,3 +146,79 @@ void Menu::modificarProducto() {
 
     listaProductos.modificarProductoPorNumero(numeroProducto, nuevoNombre, nuevoPrecio, nuevaDescripcion);
 }
+
+void Menu::eliminarProducto() {
+    if (listaProductos.contarProductos() == 0) {
+        cout << "La lista esta vacia. No hay productos para eliminar." << endl;
+        return;
+    }
+
+    int numeroProducto;
+    cout << "Seleccione el numero del producto a eliminar: ";
+    cin >> numeroProducto;
+
+    NodoProducto* producto = listaProductos.obtenerNodoPorNumero(numeroProducto);
+
+    if (producto != nullptr) {
+        cout << "Producto seleccionado: " << endl;
+        cout << "Nombre: " << producto->getProducto()->getNombre() << endl;
+        cout << "Precio: " << producto->getProducto()->getPrecio() << " Colones" << endl;
+        cout << "Descripcion: " << producto->getProducto()->getDescripcion() << endl;
+
+        char confirmacion;
+        cout << "Esta seguro de que desea eliminar este producto? (Y/N): ";
+        cin >> confirmacion;
+
+        if (confirmacion == 'Y' || confirmacion == 'y') {
+            listaProductos.eliminarProducto(producto->getProducto()->getNombre());
+            cout << "El producto ha sido eliminado." << endl;
+        } else {
+            cout << "Operacion cancelada. El producto no fue eliminado." << endl;
+        }
+    } else {
+        cout << "Numero de producto no valido. Intente nuevamente." << endl;
+    }
+}
+
+////Categorias
+
+void Menu::agregarCategoria() {
+    std::string nombre, descripcion;
+
+    std::cout << "Ingrese el nombre de la categoria: ";
+    std::cin >> nombre;
+
+    std::cout << "Ingrese la descripcion de la categoria: ";
+    std::cin.ignore();
+    std::getline(std::cin, descripcion);
+
+    Categoria* categoria = new Categoria(nombre, descripcion);
+    listaCategorias.agregarCategoria(categoria);
+}
+
+void Menu::verCategoria() {
+    listaCategorias.display();
+}
+
+void Menu::modificarCategoria() {
+    std::string nombre,nuevoNombre;
+
+    std::cout << "Ingrese el nombre de la categoria a modificar: ";
+    std::cin >> nombre;
+
+    std::cout << "Ingrese el nuevo nombre de la categoria: ";
+    std::cin >> nuevoNombre;
+
+    listaCategorias.modificarCategoria(nombre,nuevoNombre);
+
+}
+
+void Menu::eliminarCategoria() {
+    string nombre;
+
+    cout << "Ingrese el nombre de la categoria a eliminar: ";
+    cin >> nombre;
+
+    listaCategorias.eliminarCategoria(nombre);
+}
+
