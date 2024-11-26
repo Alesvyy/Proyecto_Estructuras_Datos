@@ -79,7 +79,7 @@ void Menu::agregarProducto() {
     std::cin >> precio;
 
     Producto* nuevoProducto = new Producto(nombre, descripcion, precio);
-    listaProductos.agregarProducto(nuevoProducto); // Asegúrate de que listaProductos está inicializado
+    listaProductos.agregarProducto(nuevoProducto);
 
     std::cout << "\nProducto agregado exitosamente:\n";
     std::cout << "Nombre: " << nombre << "\n";
@@ -186,15 +186,20 @@ void Menu::agregarCategoria() {
     std::string nombre, descripcion;
 
     std::cout << "Ingrese el nombre de la categoria: ";
-    std::cin >> nombre;
+    std::cin.ignore();
+    std::getline(std::cin, nombre);
 
     std::cout << "Ingrese la descripcion de la categoria: ";
-    std::cin.ignore();
     std::getline(std::cin, descripcion);
 
-    Categoria* categoria = new Categoria(nombre, descripcion);
-    listaCategorias.agregarCategoria(categoria);
+    Categoria* nuevaCategoria = new Categoria(nombre, descripcion);
+    listaCategorias.agregarCategoria(nuevaCategoria);
+
+    std::cout << "\nCategoria agregada exitosamente:\n";
+    std::cout << "Nombre: " << nombre << "\n";
+    std::cout << "Descripcion: " << descripcion << "\n";
 }
+
 
 void Menu::verCategoria() {
     listaCategorias.display();

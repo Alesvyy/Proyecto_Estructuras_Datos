@@ -26,25 +26,22 @@ void ListaCategorias::setHead(NodoCategoria *nuevoHead) {
 
 void ListaCategorias::agregarCategoria(Categoria* categoria) {
     if (!hayRepetidos(categoria->getNombre())) {
-        NodoCategoria* nodoCategoriaNueva = new NodoCategoria(categoria);
-
+        NodoCategoria* nodoCategoriaNuevo = new NodoCategoria(categoria);
         if (head == nullptr) {
-            setHead(nodoCategoriaNueva);
+            head = nodoCategoriaNuevo;
         } else {
             NodoCategoria* temp = head;
             while (temp->getSiguiente() != nullptr) {
                 temp = temp->getSiguiente();
             }
-            temp->setSiguiente(nodoCategoriaNueva);
+            temp->setSiguiente(nodoCategoriaNuevo);
         }
-
-        std::cout << "Se ha agregado la categoria " << categoria->getNombre()
-                  << " con la descripcion: " << categoria->getDescripcion() << std::endl;
-
+        std::cout << "Categoria agregada exitosamente: " << categoria->getNombre() << "\n";
     } else {
-        std::cout << "Ya existe esta categoria" << std::endl;
+        std::cout << "Ya existe una categoria con el nombre \"" << categoria->getNombre() << "\".\n";
     }
 }
+
 
 void ListaCategorias::modificarCategoria(const string& nombreActual, const string& nuevoNombre) {
 
@@ -122,12 +119,13 @@ void ListaCategorias::display() {
     NodoCategoria* temp = head;
     int contador = 1;
     while (temp != nullptr) {
-
-        cout << contador << ". " << temp->getCategoria()->getNombre() << "\n";
+        cout  << contador << ". " << "Categoria: " << temp->getCategoria()->getNombre() << "\n";
+        cout << "   Descripcion: " << temp->getCategoria()->getDescripcion() << "\n";
         temp = temp->getSiguiente();
         contador++;
     }
 }
+
 bool ListaCategorias::hayRepetidos(const std::string& nombreCategoria) {
     NodoCategoria* temp = head;
     while (temp != nullptr) {
