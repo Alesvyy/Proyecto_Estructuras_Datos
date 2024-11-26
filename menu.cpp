@@ -64,89 +64,29 @@ void Menu::mostrarMenu() {
     } while (opcion != 0);
 }
 
-void Menu::mostrarMenuColas() {
-    int opcion;
-    string atendido;
-    std::string turno;
 
-    do {
-        std::cout << "\n";
-        std::cout << "1. Insertar Turno\n";
-        std::cout << "2. Atender Clientes\n";
-        std::cout << "3. Mostrar ultimo turno ingresado\n";
-        std::cout << "4. Eliminar turno especifico\n";
-        std::cout << "5. Verificar cola\n";
-        std::cout << "0. Salir\n";
-        std::cout << "\n";
-        std::cout << "Seleccione una opcion:";
-        std::cin >> opcion;
-
-        switch (opcion) {
-            case 1:
-                cola.insertarElem();
-                    break;
-            case 2:
-                cola.atenderCliente(atendido);
-                    break;
-            case 3:
-                std::cout << "Ultimo turno ingresado: " << cola.ultimoElem() << "\n";
-                break;
-            case 4:
-                std::cout << "Ingrese el numero del turno a eliminar: ";
-                std::cin >> turno;
-                int posicion;
-                posicion = cola.buscarTurno(turno);
-                if (posicion != -1) {
-                    cola.eliminarElem(posicion);
-                    std::cout << "Turno " << turno << " eliminado.\n";
-                } else {
-                    std::cout << "Turno no encontrado.\n";
-                }
-                break;
-            case 5:
-                if(cola.esVaciaCola()) {
-                    cout <<"La cola esta vacia";
-                }else {
-                    cola.listarCola();
-                }
-                break;
-
-            case 0:
-                std::cout << "Saliendo...\n";
-            break;
-            default:
-                std::cout << "Opcion no válida. Intente de nuevo.\n";
-        }
-    } while (opcion != 0);
-}
 
 void Menu::agregarProducto() {
-    std::string nombre;
-    std::string descripcion;
+    std::string nombre, descripcion;
     double precio;
 
     std::cout << "Ingrese el nombre del producto: ";
-    std::cin >> nombre;
-
-    while (true) {
-        std::cout << "Ingrese el precio del producto: ";
-        std::cin >> precio;
-
-        if (std::cin.fail()) {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Entrada invalida. Por favor, ingrese un numero valido para el precio.\n";
-        } else {
-            break;
-        }
-    }
+    std::cin.ignore();
+    std::getline(std::cin, nombre);
 
     std::cout << "Ingrese la descripcion del producto: ";
-    std::cin.ignore();
     std::getline(std::cin, descripcion);
 
-    Producto* producto = new Producto(nombre, descripcion, precio);
-    listaProductos.agregarProducto(producto);
+    std::cout << "Ingrese el precio del producto: ";
+    std::cin >> precio;
+
+    Producto* nuevoProducto = new Producto(nombre, descripcion, precio);
+    listaProductos.agregarProducto(nuevoProducto); // Asegúrate de que listaProductos está inicializado
+
+    std::cout << "\nProducto agregado exitosamente:\n";
+    std::cout << "Nombre: " << nombre << "\n";
+    std::cout << "Descripcion: " << descripcion << "\n";
+    std::cout << "Precio: " << precio << " Colones\n";
 }
 
 void Menu::verProductos() {
@@ -166,7 +106,7 @@ void Menu::agregarCategoria() {
     Categoria* categoria = new Categoria(nombre, descripcion);
     listaCategorias.agregarCategoria(categoria);
 
-};
+}
 
 void Menu::eliminarCategoria() {
     string nombre;
