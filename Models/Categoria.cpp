@@ -20,3 +20,8 @@ void Categoria::setDescripcion(string pDescripcion) {
 void Categoria::setNombre(string pNombre) {
     nombre = pNombre;
 }
+
+ListaProductos *Categoria::getListaProductos() {
+    return listaProductos;
+}
+
