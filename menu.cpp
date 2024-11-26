@@ -89,9 +89,6 @@ void Menu::agregarProducto() {
     std::cout << "Precio: " << precio << " Colones\n";
 }
 
-
-
-
 void Menu::verProductos() {
     listaProductos.display();
 }
@@ -109,7 +106,7 @@ void Menu::agregarCategoria() {
     Categoria* categoria = new Categoria(nombre, descripcion);
     listaCategorias.agregarCategoria(categoria);
 
-};
+}
 
 void Menu::eliminarCategoria() {
     string nombre;

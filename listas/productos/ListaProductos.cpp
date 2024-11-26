@@ -38,7 +38,6 @@ void ListaProductos::agregarProducto(Producto* producto) {
     std::cout << "Se ha agregado el producto " << producto->getNombre() << " exitosamente.\n";
 }
 
-
 NodoProducto* ListaProductos::buscarProducto(string nombreProducto) {
      NodoProducto* temp = head;
      while (temp != nullptr) {
