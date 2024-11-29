@@ -19,7 +19,7 @@ public:
     void eliminarProducto(string nombreProducto);
     NodoProducto* getHead();
     void display();
-    void modificarProducto(const std::string& nombreActual, const std::string& nuevoNombre, double nuevoPrecio);
+    void modificarProducto(const std::string& nombreActual, const std::string& nuevoNombre, double nuevoPrecio, const std::string& nuevaDescripcion);
     void modificarProductoPorNumero(int numeroProducto, const std::string& nuevoNombre, double nuevoPrecio, const std::string& nuevaDescripcion);
     int contarProductos() const;
     NodoProducto* obtenerNodoPorNumero(int numero);

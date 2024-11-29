@@ -188,7 +188,7 @@ void Menu::modificarProducto() {
     std::getline(std::cin, nombreActual);
 
     // Nuevos datos
-    std::string nuevoNombre;
+    std::string nuevoNombre, nuevaDescripcion;
     double nuevoPrecio;
 
     std::cout << "Ingrese el nuevo nombre del producto: ";
@@ -206,9 +206,17 @@ void Menu::modificarProducto() {
         }
     }
 
+    std::cin.ignore(); // Limpiar el buffer para la descripción
+    std::cout << "Ingrese la nueva descripcion del producto: ";
+    std::getline(std::cin, nuevaDescripcion);
+
     // Modificar producto
-    categoriaSeleccionada->getCategoria()->getListaProductos()->modificarProducto(nombreActual, nuevoNombre, nuevoPrecio);
+    categoriaSeleccionada->getCategoria()->getListaProductos()->modificarProducto(nombreActual, nuevoNombre, nuevoPrecio, nuevaDescripcion);
+
+
+    std::cout << "Producto modificado exitosamente.\n";
 }
+
 
 
 void Menu::eliminarProducto() {

@@ -151,26 +151,29 @@ int ListaProductos::contarProductos() const {
     return contador;
 }
 
-void ListaProductos::modificarProducto(const std::string& nombreActual, const std::string& nuevoNombre, double nuevoPrecio) {
+void ListaProductos::modificarProducto(const std::string& nombreActual, const std::string& nuevoNombre, double nuevoPrecio, const std::string& nuevaDescripcion) {
     NodoProducto* nodo = buscarProducto(nombreActual);
 
     if (nodo == nullptr) {
-        std::cout << "El producto con el nombre \"" << nombreActual << "\" no existe." << std::endl;
+        std::cout << "El producto con el nombre \"" << nombreActual << "\" no existe.\n";
         return;
     }
 
-    if (hayRepetidos(nuevoNombre)) {
-        std::cout << "Ya existe un producto con el nombre \"" << nuevoNombre << "\". No se puede modificar." << std::endl;
+    if (hayRepetidos(nuevoNombre) && nombreActual != nuevoNombre) {
+        std::cout << "Ya existe un producto con el nombre \"" << nuevoNombre << "\". No se puede modificar.\n";
         return;
     }
 
     nodo->getProducto()->setNombre(nuevoNombre);
     nodo->getProducto()->setPrecio(nuevoPrecio);
+    nodo->getProducto()->setDescripcion(nuevaDescripcion);
 
-    std::cout << "El producto ha sido modificado correctamente a:\n"
-           << "Nombre: \"" << nuevoNombre << "\"\n"
-           << "Precio: " << nuevoPrecio << " Colones" << std::endl;
+    std::cout << "El producto ha sido modificado correctamente:\n"
+              << "Nombre: \"" << nuevoNombre << "\"\n"
+              << "Precio: " << nuevoPrecio << " Colones\n"
+              << "Descripcion: \"" << nuevaDescripcion << "\"\n";
 }
+
 
 void ListaProductos::modificarProductoPorNumero(int numeroProducto, const std::string& nuevoNombre, double nuevoPrecio, const std::string& nuevaDescripcion) {
     NodoProducto* nodo = obtenerNodoPorNumero(numeroProducto);
@@ -192,6 +195,6 @@ void ListaProductos::modificarProductoPorNumero(int numeroProducto, const std::s
     std::cout << "El producto ha sido modificado correctamente:\n"
               << "Nombre: \"" << nuevoNombre << "\"\n"
               << "Precio: " << nuevoPrecio << " Colones\n"
-              << "Descripción: \"" << nuevaDescripcion << "\"\n";
+              << "Descripcion: \"" << nuevaDescripcion << "\"\n";
 }
 
