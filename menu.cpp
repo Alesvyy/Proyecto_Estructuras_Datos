@@ -152,16 +152,16 @@ void Menu::modificarProducto() {
         return;
     }
 
-    // Selección de categoría
-    std::cout << "Seleccione una categoria para modificar productos:\n";
+    // Selección de categoría original
+    std::cout << "Seleccione una categoria que contenga el producto a modificar:\n";
     listaCategorias.display();
 
-    int numeroCategoria;
+    int numeroCategoriaOriginal;
     std::cout << "Ingrese el numero de la categoria: ";
     while (true) {
-        std::cin >> numeroCategoria;
+        std::cin >> numeroCategoriaOriginal;
 
-        if (std::cin.fail() || numeroCategoria < 1 || numeroCategoria > listaCategorias.contarCategorias()) {
+        if (std::cin.fail() || numeroCategoriaOriginal < 1 || numeroCategoriaOriginal > listaCategorias.contarCategorias()) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Entrada invalida. Por favor, ingrese un numero valido entre 1 y "
@@ -171,23 +171,30 @@ void Menu::modificarProducto() {
         }
     }
 
-    NodoCategoria* categoriaSeleccionada = listaCategorias.obtenerNodoPorNumero(numeroCategoria);
-    if (!categoriaSeleccionada) {
+    NodoCategoria* categoriaOriginal = listaCategorias.obtenerNodoPorNumero(numeroCategoriaOriginal);
+    if (!categoriaOriginal) {
         std::cout << "Numero de categoria invalido. Operacion cancelada.\n";
         return;
     }
 
     // Mostrar productos de la categoría seleccionada
-    std::cout << "Productos en la categoria \"" << categoriaSeleccionada->getCategoria()->getNombre() << "\":\n";
-    categoriaSeleccionada->getCategoria()->getListaProductos()->display();
+    std::cout << "Productos en la categoria \"" << categoriaOriginal->getCategoria()->getNombre() << "\":\n";
+    categoriaOriginal->getCategoria()->getListaProductos()->display();
 
-    // Selección de producto
+    // Selección del producto
     std::string nombreActual;
     std::cout << "Ingrese el nombre del producto que desea modificar: ";
     std::cin.ignore();
     std::getline(std::cin, nombreActual);
 
-    // Nuevos datos
+    // Buscar producto
+    NodoProducto* nodoProducto = categoriaOriginal->getCategoria()->getListaProductos()->buscarProducto(nombreActual);
+    if (!nodoProducto) {
+        std::cout << "El producto con el nombre \"" << nombreActual << "\" no existe en esta categoria.\n";
+        return;
+    }
+
+    // Solicitar nuevos datos
     std::string nuevoNombre, nuevaDescripcion;
     double nuevoPrecio;
 
@@ -210,12 +217,44 @@ void Menu::modificarProducto() {
     std::cout << "Ingrese la nueva descripcion del producto: ";
     std::getline(std::cin, nuevaDescripcion);
 
-    // Modificar producto
-    categoriaSeleccionada->getCategoria()->getListaProductos()->modificarProducto(nombreActual, nuevoNombre, nuevoPrecio, nuevaDescripcion);
+    // Solicitar nueva categoría
+    std::cout << "Seleccione una nueva categoria para mover el producto (o elija la misma categoria):\n";
+    listaCategorias.display();
 
+    int numeroCategoriaNueva;
+    std::cout << "Ingrese el numero de la nueva categoria: ";
+    while (true) {
+        std::cin >> numeroCategoriaNueva;
 
-    std::cout << "Producto modificado exitosamente.\n";
+        if (std::cin.fail() || numeroCategoriaNueva < 1 || numeroCategoriaNueva > listaCategorias.contarCategorias()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Entrada invalida. Por favor, ingrese un numero valido entre 1 y "
+                      << listaCategorias.contarCategorias() << ".\n";
+        } else {
+            break;
+        }
+    }
+
+    NodoCategoria* categoriaNueva = listaCategorias.obtenerNodoPorNumero(numeroCategoriaNueva);
+    if (!categoriaNueva) {
+        std::cout << "Numero de categoria invalido. Operacion cancelada.\n";
+        return;
+    }
+
+    // Crear producto actualizado y moverlo
+    Producto* productoActualizado = new Producto(nuevoNombre, nuevaDescripcion, nuevoPrecio);
+    categoriaNueva->getCategoria()->getListaProductos()->agregarProducto(productoActualizado);
+
+    // Eliminar producto de la categoría original si se movió a una nueva
+    if (categoriaOriginal != categoriaNueva) {
+        categoriaOriginal->getCategoria()->getListaProductos()->eliminarProducto(nombreActual);
+    }
+
+    std::cout << "El producto ha sido modificado exitosamente y movido a la categoraa \""
+              << categoriaNueva->getCategoria()->getNombre() << "\".\n";
 }
+
 
 
 
