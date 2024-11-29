@@ -292,17 +292,26 @@ void Menu::verCategoria() {
 }
 
 void Menu::modificarCategoria() {
-    std::string nombre,nuevoNombre;
+    if (listaCategorias.getHead() == nullptr) {
+        std::cout << "No hay categorias disponibles.\n";
+        return;
+    }
+
+    std::string nombreActual, nuevoNombre, nuevaDescripcion;
 
     std::cout << "Ingrese el nombre de la categoria a modificar: ";
-    std::cin >> nombre;
+    std::cin.ignore();
+    std::getline(std::cin, nombreActual);
 
     std::cout << "Ingrese el nuevo nombre de la categoria: ";
-    std::cin >> nuevoNombre;
+    std::getline(std::cin, nuevoNombre);
 
-    listaCategorias.modificarCategoria(nombre,nuevoNombre);
+    std::cout << "Ingrese la nueva descripcion de la categoria: ";
+    std::getline(std::cin, nuevaDescripcion);
 
+    listaCategorias.modificarCategoria(nombreActual, nuevoNombre, nuevaDescripcion);
 }
+
 
 void Menu::eliminarCategoria() {
     string nombre;

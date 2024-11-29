@@ -15,7 +15,7 @@ public:
     void eliminarCategoria(string nombreCategoria);
     NodoCategoria* getHead();
     void display();
-    void modificarCategoria(const std::string& nombreActual, const std::string& nuevoNombre);
+    void modificarCategoria(const std::string& nombreActual, const std::string& nuevoNombre, const std::string& nuevaDescripcion);
     void modificarCategoriaPorNumero(int numeroCategoria, const std::string& nuevoNombre);
     int contarCategorias() const;
     NodoCategoria* obtenerNodoPorNumero(int numero);

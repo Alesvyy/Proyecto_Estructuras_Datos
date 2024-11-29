@@ -47,18 +47,27 @@ void ListaCategorias::agregarCategoria(Categoria* categoria) {
 }
 
 
-void ListaCategorias::modificarCategoria(const string& nombreActual, const string& nuevoNombre) {
-
+void ListaCategorias::modificarCategoria(const std::string& nombreActual, const std::string& nuevoNombre, const std::string& nuevaDescripcion) {
     NodoCategoria* nodo = buscarCategoria(nombreActual);
 
     if (nodo == nullptr) {
-        cout << "La categoria con el nombre \"" << nombreActual << "\" no existe." << endl;
+        std::cout << "La categoria con el nombre \"" << nombreActual << "\" no existe." << std::endl;
+        return;
+    }
+
+    if (hayRepetidos(nuevoNombre) && nombreActual != nuevoNombre) {
+        std::cout << "Ya existe una categoria con el nombre \"" << nuevoNombre << "\". No se puede modificar." << std::endl;
         return;
     }
 
     nodo->getCategoria()->setNombre(nuevoNombre);
-    cout << "El nombre de la categoria ha sido modificado correctamente a \"" << nuevoNombre << "\"." << endl;
+    nodo->getCategoria()->setDescripcion(nuevaDescripcion);
+
+    std::cout << "La categoria ha sido modificada correctamente:\n"
+              << "Nombre: \"" << nuevoNombre << "\"\n"
+              << "Descripcion: \"" << nuevaDescripcion << "\"\n";
 }
+
 
 
 
