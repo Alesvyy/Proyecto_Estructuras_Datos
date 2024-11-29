@@ -356,6 +356,10 @@ void Menu::modificarCategoria() {
         return;
     }
 
+    // Mostrar categorias existentes
+    std::cout << "Categorias existentes:\n";
+    listaCategorias.display();
+
     std::string nombreActual, nuevoNombre, nuevaDescripcion;
 
     std::cout << "Ingrese el nombre de la categoria a modificar: ";
