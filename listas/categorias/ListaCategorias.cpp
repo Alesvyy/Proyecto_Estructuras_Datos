@@ -9,6 +9,10 @@ ListaCategorias::ListaCategorias() {
     head = nullptr;
 }
 
+NodoCategoria* ListaCategorias::getHead() {
+    return head;
+}
+
 ListaCategorias::~ListaCategorias() {
     NodoCategoria* current = head;
     NodoCategoria* next;
@@ -137,4 +141,30 @@ bool ListaCategorias::hayRepetidos(const std::string& nombreCategoria) {
     return false;
 }
 
+NodoCategoria* ListaCategorias::obtenerNodoPorNumero(int numero) {
+    if (head == nullptr) {
+        return nullptr;
+    }
+    NodoCategoria* temp = head;
+    int contador = 1;
+
+    while (temp != nullptr) {
+        if (contador == numero) {
+            return temp;
+        }
+        temp = temp->getSiguiente();
+        contador++;
+    }
+    return nullptr;
+}
+
+int ListaCategorias::contarCategorias() const {
+    int contador = 0;
+    NodoCategoria* temp = head;
+    while (temp != nullptr) {
+        contador++;
+        temp = temp->getSiguiente();
+    }
+    return contador;
+}
 

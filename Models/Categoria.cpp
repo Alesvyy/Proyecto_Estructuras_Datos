@@ -7,6 +7,7 @@
 Categoria::Categoria(string nombre, string descripcion) {
     setNombre(nombre);
     setDescripcion(descripcion);
+    listaProductos = new ListaProductos();
 }
 
 string Categoria::getNombre() {
