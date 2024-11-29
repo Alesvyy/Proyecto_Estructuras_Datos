@@ -377,11 +377,24 @@ void Menu::modificarCategoria() {
 
 
 void Menu::eliminarCategoria() {
-    string nombre;
+    if (listaCategorias.getHead() == nullptr) {
+        std::cout << "No hay categorias disponibles.\n";
+        return;
+    }
 
-    cout << "Ingrese el nombre de la categoria a eliminar: ";
-    cin >> nombre;
+    // Mostrar categorias existentes
+    std::cout << "Categorias existentes:\n";
+    listaCategorias.display();
 
+    // Solicitar al usuario el nombre de la categoria a eliminar
+    std::string nombre;
+
+    std::cout << "Ingrese el nombre de la categoria a eliminar: ";
+    std::cin.ignore();
+    std::getline(std::cin, nombre);
+
+    // Llamar al metodo para eliminar la categoria
     listaCategorias.eliminarCategoria(nombre);
 }
+
 
