@@ -20,6 +20,8 @@ public:
     void modificarProducto();
     void eliminarProducto();
     void modificarCategoria();
+    void filtrarPorLetra();
+    void filtrarCategoriasPorLetra();
 
 private:
     Cola cola;

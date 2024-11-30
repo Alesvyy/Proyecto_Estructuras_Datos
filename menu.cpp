@@ -18,7 +18,7 @@ void Menu::mostrarMenu() {
         std::cout << "6. Ver Categorias\n";
         std::cout << "7. Modificar Categoria\n";
         std::cout << "8. Eliminar Categoria\n";
-
+        std::cout << "9. Filtrar Categorias por Letra\n";
         std::cout << "0. Salir\n";
         std::cout << "\n";
         std::cout << "Seleccione una opcion: ";
@@ -55,6 +55,9 @@ void Menu::mostrarMenu() {
             case 8:
                 eliminarCategoria();
             break;
+            case 9:
+                filtrarCategoriasPorLetra();  // Llamamos a la función de filtro
+            break;
             case 0:
                 std::cout << "Saliendo...\n";
             break;
@@ -63,6 +66,7 @@ void Menu::mostrarMenu() {
         }
     } while (opcion != 0);
 }
+
 
 void Menu::agregarProducto() {
     if (listaCategorias.getHead() == nullptr) {
@@ -152,7 +156,6 @@ void Menu::modificarProducto() {
         return;
     }
 
-    // Selección de categoría original
     std::cout << "Seleccione una categoria que contenga el producto a modificar:\n";
     listaCategorias.display();
 
@@ -177,24 +180,20 @@ void Menu::modificarProducto() {
         return;
     }
 
-    // Mostrar productos de la categoría seleccionada
     std::cout << "Productos en la categoria \"" << categoriaOriginal->getCategoria()->getNombre() << "\":\n";
     categoriaOriginal->getCategoria()->getListaProductos()->display();
 
-    // Selección del producto
     std::string nombreActual;
     std::cout << "Ingrese el nombre del producto que desea modificar: ";
     std::cin.ignore();
     std::getline(std::cin, nombreActual);
 
-    // Buscar producto
     NodoProducto* nodoProducto = categoriaOriginal->getCategoria()->getListaProductos()->buscarProducto(nombreActual);
     if (!nodoProducto) {
         std::cout << "El producto con el nombre \"" << nombreActual << "\" no existe en esta categoria.\n";
         return;
     }
 
-    // Solicitar nuevos datos
     std::string nuevoNombre, nuevaDescripcion;
     double nuevoPrecio;
 
@@ -213,11 +212,10 @@ void Menu::modificarProducto() {
         }
     }
 
-    std::cin.ignore(); // Limpiar el buffer para la descripción
+    std::cin.ignore();
     std::cout << "Ingrese la nueva descripcion del producto: ";
     std::getline(std::cin, nuevaDescripcion);
 
-    // Solicitar nueva categoría
     std::cout << "Seleccione una nueva categoria para mover el producto (o elija la misma categoria):\n";
     listaCategorias.display();
 
@@ -242,11 +240,9 @@ void Menu::modificarProducto() {
         return;
     }
 
-    // Crear producto actualizado y moverlo
     Producto* productoActualizado = new Producto(nuevoNombre, nuevaDescripcion, nuevoPrecio);
     categoriaNueva->getCategoria()->getListaProductos()->agregarProducto(productoActualizado);
 
-    // Eliminar producto de la categoría original si se movió a una nueva
     if (categoriaOriginal != categoriaNueva) {
         categoriaOriginal->getCategoria()->getListaProductos()->eliminarProducto(nombreActual);
     }
@@ -289,17 +285,14 @@ void Menu::eliminarProducto() {
         return;
     }
 
-    // Mostrar productos de la categoría seleccionada
     std::cout << "Productos en la categoria \"" << categoriaSeleccionada->getCategoria()->getNombre() << "\":\n";
     categoriaSeleccionada->getCategoria()->getListaProductos()->display();
 
-    // Selección de producto
     std::string nombreProducto;
     std::cout << "Ingrese el nombre del producto que desea eliminar: ";
     std::cin.ignore();
     std::getline(std::cin, nombreProducto);
 
-    // Eliminar producto
     categoriaSeleccionada->getCategoria()->getListaProductos()->eliminarProducto(nombreProducto);
 }
 
@@ -336,11 +329,10 @@ void Menu::verCategoria() {
     int contadorCategoria = 1;
 
     while (tempCategoria != nullptr) {
-        // Mostrar información de la categoría
+
         std::cout << contadorCategoria << ". Categoria: " << tempCategoria->getCategoria()->getNombre() << "\n";
         std::cout << "   Descripcion: " << tempCategoria->getCategoria()->getDescripcion() << "\n";
 
-        // Mostrar productos de la categoría
         std::cout << "   Productos:\n";
         tempCategoria->getCategoria()->getListaProductos()->display();
 
@@ -356,7 +348,6 @@ void Menu::modificarCategoria() {
         return;
     }
 
-    // Mostrar categorias existentes
     std::cout << "Categorias existentes:\n";
     listaCategorias.display();
 
@@ -382,19 +373,53 @@ void Menu::eliminarCategoria() {
         return;
     }
 
-    // Mostrar categorias existentes
     std::cout << "Categorias existentes:\n";
     listaCategorias.display();
 
-    // Solicitar al usuario el nombre de la categoria a eliminar
     std::string nombre;
 
     std::cout << "Ingrese el nombre de la categoria a eliminar: ";
     std::cin.ignore();
     std::getline(std::cin, nombre);
 
-    // Llamar al metodo para eliminar la categoria
     listaCategorias.eliminarCategoria(nombre);
 }
 
+void Menu::filtrarPorLetra() {
+    NodoCategoria* actual = listaCategorias.getHead();
 
+    char letra = 'A';
+
+    while (actual != nullptr) {
+
+        if (actual->getCategoria()->getNombre()[0] == letra) {
+            std::cout << actual->getCategoria()->getNombre() << std::endl;
+        }
+
+        actual = actual->getSiguiente();
+    }
+}
+
+void Menu::filtrarCategoriasPorLetra() {
+    char letra;
+    std::cout << "Ingrese la letra para filtrar las categorias: ";
+    std::cin >> letra;
+
+    letra = toupper(letra);
+
+    NodoCategoria* actual = listaCategorias.getHead();
+
+    bool encontrado = false;
+    while (actual != nullptr) {
+
+        if (toupper(actual->getCategoria()->getNombre()[0]) == letra) {
+            std::cout << "Categoria: " << actual->getCategoria()->getNombre() << std::endl;
+            encontrado = true;
+        }
+        actual = actual->getSiguiente();
+    }
+
+    if (!encontrado) {
+        std::cout << "No se encontraron categorias que comiencen con la letra '" << letra << "'.\n";
+    }
+}
