@@ -22,6 +22,7 @@ public:
     void modificarCategoria();
     void filtrarPorLetra();
     void filtrarCategoriasPorLetra();
+    void filtrarPPrecio();
 
 private:
     Cola cola;

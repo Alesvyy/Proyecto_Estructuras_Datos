@@ -6,8 +6,6 @@
 #include "../../Models/Producto.h"
 
 class NodoProducto {
-
-
 private:
     Producto* producto;
     NodoProducto *siguienteProducto;

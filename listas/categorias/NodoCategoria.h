@@ -2,6 +2,7 @@
 #define NODOCATEGORIA_H
 #include "../../Models/Categoria.h"
 
+
 class NodoCategoria {
 private:
     Categoria* categoria;

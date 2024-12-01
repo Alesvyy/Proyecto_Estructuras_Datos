@@ -10,15 +10,19 @@ void Menu::mostrarMenu() {
 
     do {
         std::cout << "\n";
+        std::cout << "***  Gestion de Productos  ***\n";
         std::cout << "1. Agregar Producto\n";
         std::cout << "2. Ver Productos\n";
         std::cout << "3. Modificar Producto\n";
         std::cout << "4. Eliminar Producto\n";
+        std::cout << "***  Gestion de Categorias  ***\n";
         std::cout << "5. Agregar Categoria\n";
         std::cout << "6. Ver Categorias\n";
         std::cout << "7. Modificar Categoria\n";
         std::cout << "8. Eliminar Categoria\n";
+        std::cout << "***  Otras funcionalidades  ***\n";
         std::cout << "9. Filtrar Categorias por Letra\n";
+        std::cout << "10. Filtrar Productos por rango de precio\n";
         std::cout << "0. Salir\n";
         std::cout << "\n";
         std::cout << "Seleccione una opcion: ";
@@ -56,7 +60,10 @@ void Menu::mostrarMenu() {
                 eliminarCategoria();
             break;
             case 9:
-                filtrarCategoriasPorLetra();  // Llamamos a la función de filtro
+                filtrarCategoriasPorLetra();
+            break;
+            case 10:
+                filtrarPPrecio();  // Llamamos a la función de filtro
             break;
             case 0:
                 std::cout << "Saliendo...\n";
@@ -422,4 +429,42 @@ void Menu::filtrarCategoriasPorLetra() {
     if (!encontrado) {
         std::cout << "No se encontraron categorias que comiencen con la letra '" << letra << "'.\n";
     }
+}
+
+/*void Menu::filtrarPPrecio() {
+    double pMax;
+    double pMin;
+
+    std::cout << "Ingrese el precio mas bajo para filtrar: ";
+    std::cin >> pMin;
+
+    std::cout << "Ingrese el precio mas alto para filtrar: ";
+    std::cin >> pMax;
+
+    bool encontrado = false;
+    NodoProducto* actual = listaProductos.getHead();
+
+    while (actual != nullptr) {
+        if (actual->getProducto()->getPrecio() >= pMin && actual->getProducto()->getPrecio() <= pMax) {
+            std::cout << "Producto" << actual->getProducto()->getNombre() << std::endl;
+            encontrado = true;
+        }
+        actual = actual->getSiguiente();
+    }
+    if (!encontrado) {
+        std::cout << "No se encontraron productos en el rasgo de precios entre " << pMin << " y " << pMax << ".\n";
+    }
+}*/
+
+void Menu::filtrarPPrecio() {
+    double pMax;
+    double pMin;
+
+    std::cout << "Ingrese el precio mas bajo para filtrar: ";
+    std::cin >> pMin;
+
+    std::cout << "Ingrese el precio mas alto para filtrar: ";
+    std::cin >> pMax;
+
+    listaProductos.filtrarPPrecio(pMin, pMax);
 }
