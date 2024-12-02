@@ -8,6 +8,8 @@
 #include "NodoProducto.h"
 #include "../../Models/Producto.h"
 
+class SQLiteManager;
+
 class ListaProductos {
 public:
     ListaProductos();
@@ -16,7 +18,7 @@ public:
     void agregarProducto(Producto* producto);
     NodoProducto* buscarProducto(string nombreProducto);
     NodoProducto* buscarNodoAnterior(string nombreProducto);
-    void eliminarProducto(string nombreProducto);
+    void eliminarProducto(string nombreProducto, SQLiteManager* dbmanager);
     NodoProducto* getHead();
     void display();
     void modificarProducto(const std::string& nombreActual, const std::string& nuevoNombre, double nuevoPrecio, const std::string& nuevaDescripcion);

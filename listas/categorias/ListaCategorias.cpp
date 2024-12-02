@@ -1,3 +1,4 @@
+#include "../../db/SQLiteManager.h"
 //
 // Created by kmq06 on 11/18/2024.
 //
@@ -98,7 +99,7 @@ NodoCategoria* ListaCategorias::buscarNodoAnterior(string nombreCategoria) {
 }
 
 
-void ListaCategorias::eliminarCategoria(string nombreCategoria) {
+void ListaCategorias::eliminarCategoria(string nombreCategoria, SQLiteManager* pdbmanager) {
     if(head == nullptr){
         cout << "La lista esta vacia" << endl;
         return;
@@ -106,6 +107,8 @@ void ListaCategorias::eliminarCategoria(string nombreCategoria) {
     if (head->getCategoria()->getNombre() == nombreCategoria){
         NodoCategoria* temp = head;
         head = head->getSiguiente();
+        pdbmanager->eliminarCategoria(temp->getCategoria());
+        delete temp->getCategoria()->getListaProductos();
         delete temp;
         cout << "La categoria " << nombreCategoria << " se ha eliminado" << endl;
         return;
@@ -114,6 +117,8 @@ void ListaCategorias::eliminarCategoria(string nombreCategoria) {
     if (temp != nullptr) {
         NodoCategoria* nodoObjetivo = temp->getSiguiente();
         temp->setSiguiente(nodoObjetivo->getSiguiente());
+        pdbmanager->eliminarCategoria(nodoObjetivo->getCategoria());
+        delete nodoObjetivo->getCategoria()->getListaProductos();
         delete nodoObjetivo;
         cout << "La categoria " << nombreCategoria << " se ha eliminado" << endl;
 

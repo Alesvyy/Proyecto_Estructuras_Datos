@@ -3,6 +3,7 @@
 #include "../../Models/Categoria.h"
 #include "NodoCategoria.h"
 
+class SQLiteManager;
 
 class ListaCategorias {
 public:
@@ -12,7 +13,7 @@ public:
     void agregarCategoria(Categoria* categoria);
     NodoCategoria* buscarCategoria(string nombreCategoria);
     NodoCategoria* buscarNodoAnterior(string nombreCategoria);
-    void eliminarCategoria(string nombreCategoria);
+    void eliminarCategoria(string nombreCategoria, SQLiteManager* pdbmanager);
     NodoCategoria* getHead();
     void display();
     void modificarCategoria(const std::string& nombreActual, const std::string& nuevoNombre, const std::string& nuevaDescripcion);

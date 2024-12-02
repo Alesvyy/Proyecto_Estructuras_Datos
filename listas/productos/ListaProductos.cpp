@@ -1,3 +1,4 @@
+#include "../../db/SQLiteManager.h"
 //
 // Created by Bryan Ramirez Campos on 11/23/24.
 //
@@ -24,9 +25,15 @@ ListaProductos::~ListaProductos() {
      head = nullptr;
 }
 
+NodoProducto* ListaProductos::getHead() {
+    return head;
+}
+
+
 void ListaProductos::setHead(NodoProducto *nuevoHead) {
  head = nuevoHead;
 }
+
 
 void ListaProductos::agregarProducto(Producto* producto) {
     if (!hayRepetidos(producto->getNombre())) {
@@ -90,7 +97,7 @@ NodoProducto* ListaProductos::obtenerNodoPorNumero(int numero) {
 
 
 
-void ListaProductos::eliminarProducto(string nombreProducto) {
+void ListaProductos::eliminarProducto(string nombreProducto, SQLiteManager* dbmanager) {
      if (head == nullptr) {
          cout << "La lista esta vacia" << endl;
          return;
@@ -98,6 +105,7 @@ void ListaProductos::eliminarProducto(string nombreProducto) {
      if (head->getProducto()->getNombre() == nombreProducto) {
          NodoProducto* temp = head;
          head = head->getSiguiente();
+         dbmanager->eliminarProducto(temp->getProducto());
          delete temp;
          cout << "El producto " << nombreProducto << " se ha eliminado" << endl;
          return;
@@ -106,6 +114,7 @@ void ListaProductos::eliminarProducto(string nombreProducto) {
      if (temp != nullptr) {
          NodoProducto* nodoObjetivo = temp->getSiguiente();
          temp->setSiguiente(nodoObjetivo->getSiguiente());
+         dbmanager->eliminarProducto(nodoObjetivo->getProducto());
          delete nodoObjetivo;
          cout << "El producto " << nombreProducto << " se ha eliminado" << endl;
      } else {
