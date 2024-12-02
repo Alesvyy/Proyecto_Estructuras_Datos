@@ -451,7 +451,7 @@ void Menu::filtrarCategoriasPorLetra() {
 }
 
 void Menu::buscarProducto() {
-    if (listaCategorias.getHead() == nullptr) {
+    if (listaCategorias->getHead() == nullptr) {
         std::cout << "No hay categorias disponibles.\n";
         return;
     }
@@ -461,7 +461,7 @@ void Menu::buscarProducto() {
     std::cin.ignore();
     std::getline(std::cin, termino);
 
-    NodoCategoria* categoria = listaCategorias.getHead();
+    NodoCategoria* categoria = listaCategorias->getHead();
     bool encontrado = false;
 
     while (categoria != nullptr) {
