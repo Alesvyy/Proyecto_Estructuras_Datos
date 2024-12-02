@@ -106,6 +106,7 @@ void ListaCategorias::eliminarCategoria(string nombreCategoria) {
     if (head->getCategoria()->getNombre() == nombreCategoria){
         NodoCategoria* temp = head;
         head = head->getSiguiente();
+        delete temp->getCategoria()->getListaProductos();
         delete temp;
         cout << "La categoria " << nombreCategoria << " se ha eliminado" << endl;
         return;
@@ -114,6 +115,7 @@ void ListaCategorias::eliminarCategoria(string nombreCategoria) {
     if (temp != nullptr) {
         NodoCategoria* nodoObjetivo = temp->getSiguiente();
         temp->setSiguiente(nodoObjetivo->getSiguiente());
+        delete nodoObjetivo->getCategoria()->getListaProductos();
         delete nodoObjetivo;
         cout << "La categoria " << nombreCategoria << " se ha eliminado" << endl;
 

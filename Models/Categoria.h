@@ -26,6 +26,7 @@ public:
 
     ListaProductos* getListaProductos();
 
+    void setListaProductos(ListaProductos* lista);
 };
 
 #endif //CATEGORIA_H

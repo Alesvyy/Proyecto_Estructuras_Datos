@@ -7,7 +7,7 @@
 Categoria::Categoria(string nombre, string descripcion) {
     setNombre(nombre);
     setDescripcion(descripcion);
-    listaProductos = new ListaProductos();
+    setListaProductos(new ListaProductos());
 }
 
 string Categoria::getNombre() {
@@ -24,6 +24,10 @@ void Categoria::setNombre(string pNombre) {
 
 ListaProductos *Categoria::getListaProductos() {
     return listaProductos;
+}
+
+void Categoria::setListaProductos(ListaProductos* lista) {
+    listaProductos = lista;
 }
 
 string Categoria::getDescripcion() {
