@@ -10,13 +10,19 @@ using namespace std;
 
 class Categoria {
 private:
+    long id;
     string descricion;
     string nombre;
     ListaProductos* listaProductos;
 
 public:
+    static long globalId;
     Categoria();
     Categoria(string nombre, string descripcion);
+    Categoria(string nombre, string descripcion, long idCategoria);
+
+    long getId();
+    void setId(long pid);
 
     string getDescripcion();
     void setDescripcion(string pDescripcion);
@@ -28,5 +34,4 @@ public:
 
     void setListaProductos(ListaProductos* lista);
 };
-
 #endif //CATEGORIA_H

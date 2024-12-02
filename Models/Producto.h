@@ -11,32 +11,27 @@ public:
     Producto();
     Producto(string nombre, string descripcion, double precio);
     Producto(string nombre, string descripcion, double precio, string sku);
+    Producto(string nombre, string descripcion, double precio, string sku, long categoriaId);
 
     string getNombre();
     string getDescripcion();
     double getPrecio();
     string getSku();
+    long getIdCategoria();
 
     void setDescripcion(string pDescripcion);
     void setNombre(string pNombre);
     void setPrecio(double pPrecio);
     void setSku(string pSku);
+    void setIdCategoria(long pidCategoria);
 
 private:
     string nombre;
     string descripcion;
     double precio;
-    string categoria;
+    long idCategoria;
     string sku;
 
-    void crearProducto(string nombre, string descripcion, double precio, string categoria) {
-    }
-
-    void mostrarProducto(){}
-
-    void eliminarProducto(){}
-
-    void modificarProd(){}
 
 };
 

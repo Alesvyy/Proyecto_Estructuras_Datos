@@ -4,6 +4,7 @@
 
 #ifndef SQLITEMANAGER_H
 #define SQLITEMANAGER_H
+#include "../listas/categorias/ListaCategorias.h"
 using namespace std;
 
 #include <sqlite3.h>
@@ -32,6 +33,10 @@ public:
 
     bool update(const string& table, const unordered_map<string, string>& data, const string& condition);
     bool remove(const string& table, const string& condition);
+
+    void saveProducto(Producto* producto);
+    void saveCategoria(Categoria* categoria);
+    ListaCategorias* getCategoriasFromDB();
 
 };
 

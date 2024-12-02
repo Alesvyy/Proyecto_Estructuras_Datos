@@ -4,6 +4,9 @@
 
 #include "SQLiteManager.h"
 #include <iostream>
+#include <map>
+#include "../listas/categorias/ListaCategorias.h"
+#include "../Models/Categoria.h"
 
 SQLiteManager::SQLiteManager(const string &dbName) : db(nullprt), dbName(dbName){}
 
@@ -29,12 +32,68 @@ bool SQLiteManager::initDB() {
     return true;
 }
 
+int callback(void *data, int argc, char **argv, char **azColName){
+    int i;
+    fprintf(stderr, "%s: ", (const char*)data);
+
+    for(i = 0; i<argc; i++){
+        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+    }
+
+    printf("\n");
+    return 0;
+}
+
+void SQLiteManager::saveProducto(Producto* producto) {
+    unordered_map<string, string> data;
+    data["nombre"] = producto->getNombre();
+    data["descripcion"] = producto->getDescripcion();
+    data["sku"] = producto->getSku();
+    data["idCategoria"] = std::to_string(producto->getIdCategoria());
+    data["precio"] = std::to_string(producto->getPrecio());
+    insert("productos", data);
+}
+
+void SQLiteManager::saveCategoria(Categoria* categoria) {
+    unordered_map<string, string> data;
+    data["nombre"] = categoria->getNombre();
+    data["descripcion"] = categoria->getDescripcion();
+    insert("categorias", data);
+}
+
+ListaCategorias* SQLiteManager::getCategoriasFromDB() {
+    string sql = "SELECT * FROM Categorias";
+
+    ListaCategorias* listaCategorias = new ListaCategorias();
+
+    sqlite3_stmt* statement;
+    sqlite3_prepare_v2(db, sql.c_str(), -1, &statement, NULL);
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        Categoria* categoria = new Categoria(reinterpret_cast<const char*>(sqlite3_column_text(statement,1)),reinterpret_cast<const char*>(sqlite3_column_text(statement,2)), sqlite3_column_int64(statement, 0));
+        // categoria->setNombre(reinterpret_cast<const char*>(sqlite3_column_text(statement,1)));
+        listaCategorias->agregarCategoria(categoria);
+        Categoria::globalId = sqlite3_column_int64(statement, 0);
+    }
+
+    Categoria::globalId += 1;
+
+    return listaCategorias;
+}
+
 bool SQLiteManager::createTables() {
     const std::string createTableSQL =
         "CREATE TABLE IF NOT EXISTS categorias ("
-        "id INTEGER PRIMARY KEY, "
-        "nombre TEXT NOT NULL, "
-        "descripcion TEXT NOT NULL);";
+        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+        "nombre TEXT, "
+        "descripcion TEXT);"
+        ""
+        "CREATE TABLE IF NOT EXISTS productos ("
+        "idProducto INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "sku TEXT,"
+        "idCategoria INTEGER, "
+        "nombre TEXT, "
+        "descripcion TEXT, "
+        "precio REAL);";
 
     return execute(createTableSQL);
 }
@@ -47,7 +106,7 @@ bool SQLiteManager::execute(const string& sql) {
         sqlite3_free(errMessage);
         return false;
     }
-    cout << "SQL ejecutado exitosamente: " << sql << std::endl;
+    // cout << "SQL ejecutado exitosamente: " << sql << std::endl;
     return true;
 }
 
@@ -98,9 +157,4 @@ bool SQLiteManager::update(const string& table, const unordered_map<string, stri
     string sql = "UPDATE " + table + " SET " + updates + " WHERE " + condition + ";";
     return execute(sql);
 }
-
-
-
-
-
 
