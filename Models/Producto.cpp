@@ -1,9 +1,13 @@
 #include "Producto.h"
 
+long Producto::globalId = 1;
+
 Producto::Producto(string nombre, string descripcion, double precio) {
     setNombre(nombre);
     setDescripcion(descripcion);
     setPrecio(precio);
+    setId(globalId);
+    globalId += 1;
 }
 
 Producto::Producto(string nombre, string descripcion, double precio, string sku) {
@@ -11,6 +15,8 @@ Producto::Producto(string nombre, string descripcion, double precio, string sku)
     setDescripcion(descripcion);
     setPrecio(precio);
     setSku(sku);
+    setId(globalId);
+    globalId += 1;
 }
 
 Producto::Producto(string nombre, string descripcion, double precio, string sku, long categoriaId) {
@@ -19,6 +25,8 @@ Producto::Producto(string nombre, string descripcion, double precio, string sku,
     setPrecio(precio);
     setSku(sku);
     setIdCategoria(categoriaId);
+    setId(globalId);
+    globalId += 1;
 }
 
 string Producto::getNombre() {

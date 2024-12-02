@@ -7,6 +7,7 @@
 #include <map>
 #include "../listas/categorias/ListaCategorias.h"
 #include "../Models/Categoria.h"
+#include "../Models/Variante.h"
 
 SQLiteManager::SQLiteManager(const string &dbName) : db(nullprt), dbName(dbName){}
 
@@ -32,16 +33,25 @@ bool SQLiteManager::initDB() {
     return true;
 }
 
-int callback(void *data, int argc, char **argv, char **azColName){
-    int i;
-    fprintf(stderr, "%s: ", (const char*)data);
-
-    for(i = 0; i<argc; i++){
-        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+bool SQLiteManager::loadIds() {
+    string sql = "SELECT * FROM sqlite_sequece";
+    sqlite3_stmt* statement;
+    sqlite3_prepare_v2(db, sql.c_str(), -1, &statement, NULL);
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        if(reinterpret_cast<const char*>(sqlite3_column_text(statement,0)) == "productos") {
+            Producto::globalId = sqlite3_column_int64(statement,1);
+            Producto::globalId += 1;
+        }
+        if(reinterpret_cast<const char*>(sqlite3_column_text(statement,0)) == "categorias") {
+            Categoria::globalId = sqlite3_column_int64(statement,1);
+            Categoria::globalId += 1;
+        }
+        if(reinterpret_cast<const char*>(sqlite3_column_text(statement,0)) == "variantes") {
+            Variante::globalId = sqlite3_column_int64(statement,1);
+            Variante::globalId += 1;
+        }
     }
-
-    printf("\n");
-    return 0;
+    return true;
 }
 
 void SQLiteManager::saveProducto(Producto* producto) {
@@ -73,10 +83,7 @@ ListaCategorias* SQLiteManager::getCategoriasFromDB() {
         Categoria* categoria = new Categoria(reinterpret_cast<const char*>(sqlite3_column_text(statement,1)),reinterpret_cast<const char*>(sqlite3_column_text(statement,2)), sqlite3_column_int64(statement, 0));
         listaCategorias->agregarCategoria(categoria);
         categoria->setListaProductos(getProductosFromDB(categoria->getId()));
-        Categoria::globalId = sqlite3_column_int64(statement, 0);
     }
-
-    Categoria::globalId += 1;
 
     return listaCategorias;
 }
@@ -97,6 +104,20 @@ ListaProductos* SQLiteManager::getProductosFromDB(long idCategoria) {
     return listaProductos;
 }
 
+void SQLiteManager::eliminarCategoria(Categoria *categoria) {
+    NodoProducto* tempProd = categoria->getListaProductos()->getHead();
+    while (tempProd != nullptr) {
+        remove("productos", "idProducto = "+ std::to_string(tempProd->getProducto()->getId()));
+        tempProd = tempProd->getSiguiente();
+    }
+
+    remove("categorias", "id = " + std::to_string(categoria->getId()));
+}
+
+void SQLiteManager::eliminarProducto(Producto *producto) {
+    remove("productos", "idProducto = "+ std::to_string(producto->getId()));
+}
+
 bool SQLiteManager::createTables() {
     const std::string createTableSQL =
         "CREATE TABLE IF NOT EXISTS categorias ("
@@ -110,7 +131,13 @@ bool SQLiteManager::createTables() {
         "idCategoria INTEGER, "
         "nombre TEXT, "
         "descripcion TEXT, "
-        "precio REAL);";
+        "precio REAL);"
+        ""
+        "CREATE TABLE IF NOT EXISTS variantes ("
+        "idVariante INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "IdProducto INTEGER, "
+        "nombre TEXT,"
+        "especificacion TEXT);";
 
     return execute(createTableSQL);
 }
@@ -175,3 +202,7 @@ bool SQLiteManager::update(const string& table, const unordered_map<string, stri
     return execute(sql);
 }
 
+bool SQLiteManager::remove(const string &table, const string &condition) {
+    std::string sql = "DELETE FROM " + table + " WHERE " + condition + ";";
+    return execute(sql);
+}

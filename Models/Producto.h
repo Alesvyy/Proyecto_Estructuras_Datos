@@ -3,11 +3,14 @@
 
 #include <string>
 #include <iostream>
+
+#include "../listas/Variantes/ListaVariantes.h"
 using namespace std;
 
 class Producto {
 
 public:
+    static long globalId;
     Producto();
     Producto(string nombre, string descripcion, double precio);
     Producto(string nombre, string descripcion, double precio, string sku);
@@ -34,7 +37,7 @@ private:
     double precio;
     long idCategoria;
     string sku;
-
+    ListaVariantes* variantes;
 
 };
 

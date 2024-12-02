@@ -12,6 +12,7 @@ Menu::Menu() {
 void Menu::cargarDatosDB() {
     cout << "Cargando datos previamente guardados" << endl;
     dbManager->initDB();
+    dbManager->loadIds();
     listaCategorias = dbManager->getCategoriasFromDB();
 
 }
@@ -270,10 +271,11 @@ void Menu::modificarProducto() {
     // datos["nombre"] = productoActualizado->getNombre();
     // datos["precio"] = productoActualizado->getPrecio();
     // datos["descripcion"] = productoActualizado->getDescripcion();
+    //
     // dbManager->update("productos", datos,"idCategoria = ")
     //
     if (categoriaOriginal != categoriaNueva) {
-        categoriaOriginal->getCategoria()->getListaProductos()->eliminarProducto(nombreActual);
+        categoriaOriginal->getCategoria()->getListaProductos()->eliminarProducto(nombreActual, dbManager);
     }
 
     std::cout << "El producto ha sido modificado exitosamente y movido a la categoraia \""
@@ -322,7 +324,7 @@ void Menu::eliminarProducto() {
     std::cin.ignore();
     std::getline(std::cin, nombreProducto);
 
-    categoriaSeleccionada->getCategoria()->getListaProductos()->eliminarProducto(nombreProducto);
+    categoriaSeleccionada->getCategoria()->getListaProductos()->eliminarProducto(nombreProducto, dbManager);
 }
 
 
@@ -412,7 +414,7 @@ void Menu::eliminarCategoria() {
     std::cin.ignore();
     std::getline(std::cin, nombre);
 
-    listaCategorias->eliminarCategoria(nombre);
+    listaCategorias->eliminarCategoria(nombre, dbManager);
 }
 
 void Menu::filtrarPorLetra() {

@@ -4,13 +4,13 @@
 
 #ifndef SQLITEMANAGER_H
 #define SQLITEMANAGER_H
-#include "../listas/categorias/ListaCategorias.h"
 using namespace std;
 
 #include <sqlite3.h>
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include "../listas/categorias/ListaCategorias.h"
 
 class SQLiteManager {
 private:
@@ -25,6 +25,7 @@ public:
     ~SQLiteManager();
 
     bool initDB();
+    bool loadIds();
 
     bool execute(const string& sql);
 
@@ -38,7 +39,8 @@ public:
     void saveCategoria(Categoria* categoria);
     ListaCategorias* getCategoriasFromDB();
     ListaProductos* getProductosFromDB(long idCategoria);
-
+    void eliminarCategoria(Categoria* categoria);
+    void eliminarProducto(Producto* categoria);
 };
 
 
