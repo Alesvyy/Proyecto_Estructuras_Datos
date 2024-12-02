@@ -10,6 +10,8 @@ Categoria::Categoria(string nombre, string descripcion) {
     setNombre(nombre);
     setDescripcion(descripcion);
     setListaProductos(new ListaProductos());
+    setId(globalId);
+    globalId += 1;
 }
 
 Categoria::Categoria(string nombre, string descripcion, long idCategoria) {

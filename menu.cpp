@@ -4,8 +4,6 @@
 
 #include "db/SQLiteManager.h"
 
-
-
 Menu::Menu() {
     dbManager = new SQLiteManager("../db/prod.db");
     cargarDatosDB();
@@ -17,7 +15,6 @@ void Menu::cargarDatosDB() {
     listaCategorias = dbManager->getCategoriasFromDB();
 
 }
-
 
 void Menu::mostrarMenu() {
     int opcion;
@@ -269,11 +266,17 @@ void Menu::modificarProducto() {
     Producto* productoActualizado = new Producto(nuevoNombre, nuevaDescripcion, nuevoPrecio);
     categoriaNueva->getCategoria()->getListaProductos()->agregarProducto(productoActualizado);
 
+    // unordered_map<string, string> datos;
+    // datos["nombre"] = productoActualizado->getNombre();
+    // datos["precio"] = productoActualizado->getPrecio();
+    // datos["descripcion"] = productoActualizado->getDescripcion();
+    // dbManager->update("productos", datos,"idCategoria = ")
+    //
     if (categoriaOriginal != categoriaNueva) {
         categoriaOriginal->getCategoria()->getListaProductos()->eliminarProducto(nombreActual);
     }
 
-    std::cout << "El producto ha sido modificado exitosamente y movido a la categoraa \""
+    std::cout << "El producto ha sido modificado exitosamente y movido a la categoraia \""
               << categoriaNueva->getCategoria()->getNombre() << "\".\n";
 }
 
@@ -337,6 +340,7 @@ void Menu::agregarCategoria() {
     std::getline(std::cin, descripcion);
 
     Categoria* nuevaCategoria = new Categoria(nombre, descripcion);
+    dbManager->saveCategoria(nuevaCategoria);
     listaCategorias->agregarCategoria(nuevaCategoria);
 
     std::cout << "\nCategoria agregada exitosamente:\n";

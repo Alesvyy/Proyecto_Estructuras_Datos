@@ -40,6 +40,9 @@ long Producto::getIdCategoria() {
     return idCategoria;
 }
 
+long Producto::getId() {
+    return id;
+}
 
 void Producto::setDescripcion(string pDescripcion) {
     descripcion = pDescripcion;
@@ -58,4 +61,9 @@ void Producto::setPrecio(double pPrecio) {
 void Producto::setIdCategoria(long pidCategoria) {
     idCategoria = pidCategoria;
 }
+
+void Producto::setId(long pid) {
+    id = pid;
+}
+
 

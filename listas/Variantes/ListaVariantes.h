@@ -22,10 +22,6 @@ public:
     void modificarVariante(const std::string& nombreActual, const std::string& nuevoNombre,
         const std::string& nuevaEspecificacion);
 
-    NodoVariante * obtenerNodoPorNombre();
-
-    NodoVariante * obtenerNodoPorNombre(const string & string);
-
     void modificarVariantePorNombre(const std::string& nuevoNombre,const std::string& nuevaEspecificacion);
     int contarVariantes() const;
     NodoVariante* obtenerNodoPorNumero(int numero);

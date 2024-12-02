@@ -56,6 +56,7 @@ void SQLiteManager::saveProducto(Producto* producto) {
 
 void SQLiteManager::saveCategoria(Categoria* categoria) {
     unordered_map<string, string> data;
+    data["id"] = std::to_string(categoria->getId());
     data["nombre"] = categoria->getNombre();
     data["descripcion"] = categoria->getDescripcion();
     insert("categorias", data);
@@ -70,14 +71,30 @@ ListaCategorias* SQLiteManager::getCategoriasFromDB() {
     sqlite3_prepare_v2(db, sql.c_str(), -1, &statement, NULL);
     while (sqlite3_step(statement) == SQLITE_ROW) {
         Categoria* categoria = new Categoria(reinterpret_cast<const char*>(sqlite3_column_text(statement,1)),reinterpret_cast<const char*>(sqlite3_column_text(statement,2)), sqlite3_column_int64(statement, 0));
-        // categoria->setNombre(reinterpret_cast<const char*>(sqlite3_column_text(statement,1)));
         listaCategorias->agregarCategoria(categoria);
+        categoria->setListaProductos(getProductosFromDB(categoria->getId()));
         Categoria::globalId = sqlite3_column_int64(statement, 0);
     }
 
     Categoria::globalId += 1;
 
     return listaCategorias;
+}
+
+ListaProductos* SQLiteManager::getProductosFromDB(long idCategoria) {
+    string sql = "SELECT * FROM productos where idCategoria =" + std::to_string(idCategoria);
+
+    ListaProductos* listaProductos = new ListaProductos();
+
+    sqlite3_stmt* statement;
+    sqlite3_prepare_v2(db, sql.c_str(), -1, &statement, NULL);
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        Producto* producto = new Producto(reinterpret_cast<const char*>(sqlite3_column_text(statement,3)),reinterpret_cast<const char*>(sqlite3_column_text(statement,4)), sqlite3_column_int64(statement, 5), reinterpret_cast<const char*>(sqlite3_column_text(statement,1)), sqlite3_column_int64(statement, 2));
+        producto->setId(sqlite3_column_int64(statement, 0));
+        listaProductos->agregarProducto(producto);
+    }
+
+    return listaProductos;
 }
 
 bool SQLiteManager::createTables() {

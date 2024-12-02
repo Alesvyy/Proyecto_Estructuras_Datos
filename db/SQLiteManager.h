@@ -37,6 +37,7 @@ public:
     void saveProducto(Producto* producto);
     void saveCategoria(Categoria* categoria);
     ListaCategorias* getCategoriasFromDB();
+    ListaProductos* getProductosFromDB(long idCategoria);
 
 };
 

@@ -18,14 +18,17 @@ public:
     double getPrecio();
     string getSku();
     long getIdCategoria();
+    long getId();
 
     void setDescripcion(string pDescripcion);
     void setNombre(string pNombre);
     void setPrecio(double pPrecio);
     void setSku(string pSku);
     void setIdCategoria(long pidCategoria);
+    void setId(long id);
 
 private:
+    long id;
     string nombre;
     string descripcion;
     double precio;
