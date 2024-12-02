@@ -1,7 +1,6 @@
 using namespace std;
 #include <iostream>
 #include "listaVariantes.h"
-#include "../../listas/productos/ListaProductos.h"
 
 listaVariantes::listaVariantes() {
     head = nullptr;

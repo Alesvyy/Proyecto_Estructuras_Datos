@@ -11,7 +11,7 @@
 class listaVariantes {
 public:
     listaVariantes();
-    ~listaVariantes()();
+    ~listaVariantes();
 
     void agregarVariante(Variante* variante);
     void eliminarVariante(string nombreProducto);
