@@ -5,14 +5,14 @@
 #ifndef CATEGORIA_H
 #define CATEGORIA_H
 #include<string>
+#include "../listas/productos/ListaProductos.h"
 using namespace std;
-
-
 
 class Categoria {
 private:
     string descricion;
     string nombre;
+    ListaProductos* listaProductos;
 
 public:
     Categoria();
@@ -24,12 +24,9 @@ public:
     string getNombre();
     void setNombre(string pNombre);
 
+    ListaProductos* getListaProductos();
 
-
-
-
+    void setListaProductos(ListaProductos* lista);
 };
 
-
-
-#endif //CATEGORÍA_H
+#endif //CATEGORIA_H

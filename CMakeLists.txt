@@ -16,10 +16,20 @@ add_executable(ProyectoEstructurasDeDatos
         Models/Categoria.cpp
         PracticaColas/Cola.cpp
         PracticaColas/Cola.h
-        Models/ListaCategorias.cpp
-        Models/ListaCategorias.h
-        Models/NodoCategoria.cpp
-        Models/NodoCategoria.h
+        listas/categorias/ListaCategorias.cpp
+        listas/categorias/ListaCategorias.h
+        listas/categorias/NodoCategoria.cpp
+        listas/categorias/NodoCategoria.h
+        listas/productos/ListaProductos.cpp
+        listas/productos/ListaProductos.h
+        listas/productos/NodoProducto.cpp
+        listas/productos/NodoProducto.h
+        listas/Variantes/listaVariantes.h
+        listas/Variantes/listaVarinates.cpp
+        listas/Variantes/nodoVariante.h
+        listas/Variantes/nodoVariante.cpp
+        Models/Variante.h
+        Models/Variante.cpp
         db/SQLiteManager.cpp
         db/SQLiteManager.h
 )

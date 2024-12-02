@@ -1,22 +1,41 @@
-//
-// Created by Bryan Ramirez Campos on 14/10/24.
-//
-
 #include "Producto.h"
 
-// Constructor
-Producto::Producto(const std::string& nombre, double precio, const std::string& descripcion)
-    : nombre(nombre), precio(precio), descripcion(descripcion) {}
+Producto::Producto(string nombre, string descripcion, double precio) {
+    setNombre(nombre);
+    setDescripcion(descripcion);
+    setPrecio(precio);
+}
 
-// Getters
-std::string Producto::getNombre() const {
+Producto::Producto(string nombre, string descripcion, double precio, string sku) {
+    setNombre(nombre);
+    setDescripcion(descripcion);
+    setPrecio(precio);
+    setSku(sku);
+}
+
+string Producto::getNombre() {
     return nombre;
 }
-
-double Producto::getPrecio() const {
+string Producto::getDescripcion() {
+    return descripcion;
+}
+double Producto::getPrecio() {
     return precio;
 }
+string Producto::getSku() {
+    return sku;
+}
 
-std::string Producto::getDescripcion() const {
-    return descripcion;
+void Producto::setDescripcion(string pDescripcion) {
+    descripcion = pDescripcion;
+}
+void Producto::setNombre(string pNombre) {
+    nombre = pNombre;
+}
+void Producto::setSku(string pSku) {
+    sku = pSku;
+}
+
+void Producto::setPrecio(double pPrecio) {
+    precio = pPrecio;
 }

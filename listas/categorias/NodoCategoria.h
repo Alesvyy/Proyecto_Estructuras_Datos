@@ -1,11 +1,6 @@
-//
-// Created by kmq06 on 11/18/2024.
-//
-
 #ifndef NODOCATEGORIA_H
 #define NODOCATEGORIA_H
-#include "Categoria.h"
-
+#include "../../Models/Categoria.h"
 
 class NodoCategoria {
 private:
@@ -15,12 +10,9 @@ private:
 public:
     NodoCategoria(Categoria* categoria);
     void setSiguiente(NodoCategoria* siguiente);
-    NodoCategoria* getSiguiente();
+    NodoCategoria* getSiguiente();  // Este es el getter que vamos a utilizar
     Categoria* getCategoria();
     void setCategoria(Categoria* categoria);
-
 };
-
-
 
 #endif //NODOCATEGORIA_H
