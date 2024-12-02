@@ -466,5 +466,10 @@ void Menu::filtrarPPrecio() {
     std::cout << "Ingrese el precio mas alto para filtrar: ";
     std::cin >> pMax;
 
-    listaProductos.filtrarPPrecio(pMin, pMax);
+    NodoCategoria* nodo = listaCategorias.getHead();
+
+    while (nodo != nullptr) {
+        nodo->getCategoria()->getListaProductos()->filtrarPPrecio(pMin, pMax);
+        nodo = nodo->getSiguiente();
+    }
 }

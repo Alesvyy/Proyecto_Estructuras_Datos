@@ -27,7 +27,6 @@ public:
 private:
     Cola cola;
     ListaCategorias listaCategorias;
-    ListaProductos listaProductos;
 
 };
 
