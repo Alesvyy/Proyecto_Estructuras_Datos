@@ -366,25 +366,7 @@ void Menu::agregarCategoria() {
 
 
 void Menu::verCategoria() {
-    if (listaCategorias->getHead() == nullptr) {
-        std::cout << "No hay categorias disponibles.\n";
-        return;
-    }
-
-    NodoCategoria* tempCategoria = listaCategorias->getHead();
-    int contadorCategoria = 1;
-
-    while (tempCategoria != nullptr) {
-
-        std::cout << contadorCategoria << ". Categoria: " << tempCategoria->getCategoria()->getNombre() << "\n";
-        std::cout << "   Descripcion: " << tempCategoria->getCategoria()->getDescripcion() << "\n";
-
-        std::cout << "   Productos:\n";
-        tempCategoria->getCategoria()->getListaProductos()->display();
-
-        tempCategoria = tempCategoria->getSiguiente();
-        contadorCategoria++;
-    }
+    listaCategorias->display();
 }
 
 
