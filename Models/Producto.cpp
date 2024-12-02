@@ -13,6 +13,14 @@ Producto::Producto(string nombre, string descripcion, double precio, string sku)
     setSku(sku);
 }
 
+Producto::Producto(string nombre, string descripcion, double precio, string sku, long categoriaId) {
+    setNombre(nombre);
+    setDescripcion(descripcion);
+    setPrecio(precio);
+    setSku(sku);
+    setIdCategoria(categoriaId);
+}
+
 string Producto::getNombre() {
     return nombre;
 }
@@ -28,6 +36,13 @@ double Producto::getPrecio() {
 string Producto::getSku() {
     return sku;
 }
+long Producto::getIdCategoria() {
+    return idCategoria;
+}
+
+long Producto::getId() {
+    return id;
+}
 
 void Producto::setDescripcion(string pDescripcion) {
     descripcion = pDescripcion;
@@ -40,7 +55,15 @@ void Producto::setNombre(string pNombre) {
 void Producto::setSku(string pSku) {
     sku = pSku;
 }
-
 void Producto::setPrecio(double pPrecio) {
     precio = pPrecio;
 }
+void Producto::setIdCategoria(long pidCategoria) {
+    idCategoria = pidCategoria;
+}
+
+void Producto::setId(long pid) {
+    id = pid;
+}
+
+

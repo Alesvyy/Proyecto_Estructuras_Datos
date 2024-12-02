@@ -3,7 +3,10 @@ project(ProyectoEstructurasDeDatos)
 
 set(CMAKE_CXX_STANDARD 20)
 
+include_directories(libs/sqlite)
+
 add_executable(ProyectoEstructurasDeDatos
+        libs/sqlite/sqlite3.c
         main.cpp
         Models/Producto.cpp
         Models/Producto.h
@@ -27,4 +30,6 @@ add_executable(ProyectoEstructurasDeDatos
         listas/Variantes/nodoVariante.cpp
         Models/Variante.h
         Models/Variante.cpp
+        db/SQLiteManager.cpp
+        db/SQLiteManager.h
 )

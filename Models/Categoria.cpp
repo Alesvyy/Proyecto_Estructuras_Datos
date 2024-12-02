@@ -4,10 +4,29 @@
 
 #include "Categoria.h"
 
+long Categoria::globalId = 0;
+
 Categoria::Categoria(string nombre, string descripcion) {
     setNombre(nombre);
     setDescripcion(descripcion);
     setListaProductos(new ListaProductos());
+    setId(globalId);
+    globalId += 1;
+}
+
+Categoria::Categoria(string nombre, string descripcion, long idCategoria) {
+    setId(idCategoria);
+    setNombre(nombre);
+    setDescripcion(descripcion);
+    setListaProductos(new ListaProductos());
+}
+
+long Categoria::getId() {
+    return id;
+}
+
+void Categoria::setId(long pid) {
+    id = pid;
 }
 
 string Categoria::getNombre() {

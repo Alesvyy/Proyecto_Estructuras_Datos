@@ -1,9 +1,20 @@
 #include "menu.h"
 #include <iostream>
-#include <vector>
 #include <limits>
 
-Menu::Menu() {}
+#include "db/SQLiteManager.h"
+
+Menu::Menu() {
+    dbManager = new SQLiteManager("../db/prod.db");
+    cargarDatosDB();
+}
+
+void Menu::cargarDatosDB() {
+    cout << "Cargando datos previamente guardados" << endl;
+    dbManager->initDB();
+    listaCategorias = dbManager->getCategoriasFromDB();
+
+}
 
 void Menu::mostrarMenu() {
     int opcion;
@@ -73,30 +84,30 @@ void Menu::mostrarMenu() {
 
 
 void Menu::agregarProducto() {
-    if (listaCategorias.getHead() == nullptr) {
+    if (listaCategorias->getHead() == nullptr) {
         std::cout << "No hay categorias disponibles. Agregue una categoria primero.\n";
         return;
     }
 
     std::cout << "Seleccione una categoria para agregar el producto:\n";
-    listaCategorias.display();
+    listaCategorias->display();
 
     int numeroCategoria;
     std::cout << "Ingrese el numero de la categoria: ";
     while (true) {
         std::cin >> numeroCategoria;
 
-        if (std::cin.fail() || numeroCategoria < 1 || numeroCategoria > listaCategorias.contarCategorias()) {
+        if (std::cin.fail() || numeroCategoria < 1 || numeroCategoria > listaCategorias->contarCategorias()) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Entrada invalida. Por favor, ingrese un numero valido entre 1 y "
-                      << listaCategorias.contarCategorias() << ".\n";
+                      << listaCategorias->contarCategorias() << ".\n";
         } else {
             break;
         }
     }
 
-    NodoCategoria* categoriaSeleccionada = listaCategorias.obtenerNodoPorNumero(numeroCategoria);
+    NodoCategoria* categoriaSeleccionada = listaCategorias->obtenerNodoPorNumero(numeroCategoria);
     if (!categoriaSeleccionada) {
         std::cout << "Numero de categoria invalido. Operacion cancelada.\n";
         return;
@@ -129,7 +140,9 @@ void Menu::agregarProducto() {
     std::cout << "Ingrese el SKU del producto: ";
     std::cin >> sku;
 
-    Producto* nuevoProducto = new Producto(nombre, descripcion, precio, sku);
+    Producto* nuevoProducto = new Producto(nombre, descripcion, precio, sku, categoriaSeleccionada->getCategoria()->getId());
+    dbManager->saveProducto(nuevoProducto);
+
     categoriaSeleccionada->getCategoria()->getListaProductos()->agregarProducto(nuevoProducto);
 
     std::cout << "\nProducto agregado exitosamente a la categoria \""
@@ -143,12 +156,12 @@ void Menu::agregarProducto() {
 
 
 void Menu::verProductos() {
-    if (listaCategorias.getHead() == nullptr) {
+    if (listaCategorias->getHead() == nullptr) {
         std::cout << "No hay categorias disponibles.\n";
         return;
     }
 
-    NodoCategoria* tempCategoria = listaCategorias.getHead();
+    NodoCategoria* tempCategoria = listaCategorias->getHead();
     int contadorCategoria = 1;
 
     while (tempCategoria != nullptr) {
@@ -161,30 +174,30 @@ void Menu::verProductos() {
 
 
 void Menu::modificarProducto() {
-    if (listaCategorias.getHead() == nullptr) {
+    if (listaCategorias->getHead() == nullptr) {
         std::cout << "No hay categorias disponibles.\n";
         return;
     }
 
     std::cout << "Seleccione una categoria que contenga el producto a modificar:\n";
-    listaCategorias.display();
+    listaCategorias->display();
 
     int numeroCategoriaOriginal;
     std::cout << "Ingrese el numero de la categoria: ";
     while (true) {
         std::cin >> numeroCategoriaOriginal;
 
-        if (std::cin.fail() || numeroCategoriaOriginal < 1 || numeroCategoriaOriginal > listaCategorias.contarCategorias()) {
+        if (std::cin.fail() || numeroCategoriaOriginal < 1 || numeroCategoriaOriginal > listaCategorias->contarCategorias()) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Entrada invalida. Por favor, ingrese un numero valido entre 1 y "
-                      << listaCategorias.contarCategorias() << ".\n";
+                      << listaCategorias->contarCategorias() << ".\n";
         } else {
             break;
         }
     }
 
-    NodoCategoria* categoriaOriginal = listaCategorias.obtenerNodoPorNumero(numeroCategoriaOriginal);
+    NodoCategoria* categoriaOriginal = listaCategorias->obtenerNodoPorNumero(numeroCategoriaOriginal);
     if (!categoriaOriginal) {
         std::cout << "Numero de categoria invalido. Operacion cancelada.\n";
         return;
@@ -227,24 +240,24 @@ void Menu::modificarProducto() {
     std::getline(std::cin, nuevaDescripcion);
 
     std::cout << "Seleccione una nueva categoria para mover el producto (o elija la misma categoria):\n";
-    listaCategorias.display();
+    listaCategorias->display();
 
     int numeroCategoriaNueva;
     std::cout << "Ingrese el numero de la nueva categoria: ";
     while (true) {
         std::cin >> numeroCategoriaNueva;
 
-        if (std::cin.fail() || numeroCategoriaNueva < 1 || numeroCategoriaNueva > listaCategorias.contarCategorias()) {
+        if (std::cin.fail() || numeroCategoriaNueva < 1 || numeroCategoriaNueva > listaCategorias->contarCategorias()) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Entrada invalida. Por favor, ingrese un numero valido entre 1 y "
-                      << listaCategorias.contarCategorias() << ".\n";
+                      << listaCategorias->contarCategorias() << ".\n";
         } else {
             break;
         }
     }
 
-    NodoCategoria* categoriaNueva = listaCategorias.obtenerNodoPorNumero(numeroCategoriaNueva);
+    NodoCategoria* categoriaNueva = listaCategorias->obtenerNodoPorNumero(numeroCategoriaNueva);
     if (!categoriaNueva) {
         std::cout << "Numero de categoria invalido. Operacion cancelada.\n";
         return;
@@ -253,11 +266,17 @@ void Menu::modificarProducto() {
     Producto* productoActualizado = new Producto(nuevoNombre, nuevaDescripcion, nuevoPrecio);
     categoriaNueva->getCategoria()->getListaProductos()->agregarProducto(productoActualizado);
 
+    // unordered_map<string, string> datos;
+    // datos["nombre"] = productoActualizado->getNombre();
+    // datos["precio"] = productoActualizado->getPrecio();
+    // datos["descripcion"] = productoActualizado->getDescripcion();
+    // dbManager->update("productos", datos,"idCategoria = ")
+    //
     if (categoriaOriginal != categoriaNueva) {
         categoriaOriginal->getCategoria()->getListaProductos()->eliminarProducto(nombreActual);
     }
 
-    std::cout << "El producto ha sido modificado exitosamente y movido a la categoraa \""
+    std::cout << "El producto ha sido modificado exitosamente y movido a la categoraia \""
               << categoriaNueva->getCategoria()->getNombre() << "\".\n";
 }
 
@@ -265,31 +284,31 @@ void Menu::modificarProducto() {
 
 
 void Menu::eliminarProducto() {
-    if (listaCategorias.getHead() == nullptr) {
+    if (listaCategorias->getHead() == nullptr) {
         std::cout << "No hay categorias disponibles.\n";
         return;
     }
 
     // Selección de categoría
     std::cout << "Seleccione una categoria para eliminar productos:\n";
-    listaCategorias.display();
+    listaCategorias->display();
 
     int numeroCategoria;
     std::cout << "Ingrese el numero de la categoria: ";
     while (true) {
         std::cin >> numeroCategoria;
 
-        if (std::cin.fail() || numeroCategoria < 1 || numeroCategoria > listaCategorias.contarCategorias()) {
+        if (std::cin.fail() || numeroCategoria < 1 || numeroCategoria > listaCategorias->contarCategorias()) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Entrada invalida. Por favor, ingrese un numero valido entre 1 y "
-                      << listaCategorias.contarCategorias() << ".\n";
+                      << listaCategorias->contarCategorias() << ".\n";
         } else {
             break;
         }
     }
 
-    NodoCategoria* categoriaSeleccionada = listaCategorias.obtenerNodoPorNumero(numeroCategoria);
+    NodoCategoria* categoriaSeleccionada = listaCategorias->obtenerNodoPorNumero(numeroCategoria);
     if (!categoriaSeleccionada) {
         std::cout << "Numero de categoria invalido. Operacion cancelada.\n";
         return;
@@ -321,7 +340,8 @@ void Menu::agregarCategoria() {
     std::getline(std::cin, descripcion);
 
     Categoria* nuevaCategoria = new Categoria(nombre, descripcion);
-    listaCategorias.agregarCategoria(nuevaCategoria);
+    dbManager->saveCategoria(nuevaCategoria);
+    listaCategorias->agregarCategoria(nuevaCategoria);
 
     std::cout << "\nCategoria agregada exitosamente:\n";
     std::cout << "Nombre: " << nombre << "\n";
@@ -330,12 +350,12 @@ void Menu::agregarCategoria() {
 
 
 void Menu::verCategoria() {
-    if (listaCategorias.getHead() == nullptr) {
+    if (listaCategorias->getHead() == nullptr) {
         std::cout << "No hay categorias disponibles.\n";
         return;
     }
 
-    NodoCategoria* tempCategoria = listaCategorias.getHead();
+    NodoCategoria* tempCategoria = listaCategorias->getHead();
     int contadorCategoria = 1;
 
     while (tempCategoria != nullptr) {
@@ -353,13 +373,13 @@ void Menu::verCategoria() {
 
 
 void Menu::modificarCategoria() {
-    if (listaCategorias.getHead() == nullptr) {
+    if (listaCategorias->getHead() == nullptr) {
         std::cout << "No hay categorias disponibles.\n";
         return;
     }
 
     std::cout << "Categorias existentes:\n";
-    listaCategorias.display();
+    listaCategorias->display();
 
     std::string nombreActual, nuevoNombre, nuevaDescripcion;
 
@@ -373,18 +393,18 @@ void Menu::modificarCategoria() {
     std::cout << "Ingrese la nueva descripcion de la categoria: ";
     std::getline(std::cin, nuevaDescripcion);
 
-    listaCategorias.modificarCategoria(nombreActual, nuevoNombre, nuevaDescripcion);
+    listaCategorias->modificarCategoria(nombreActual, nuevoNombre, nuevaDescripcion);
 }
 
 
 void Menu::eliminarCategoria() {
-    if (listaCategorias.getHead() == nullptr) {
+    if (listaCategorias->getHead() == nullptr) {
         std::cout << "No hay categorias disponibles.\n";
         return;
     }
 
     std::cout << "Categorias existentes:\n";
-    listaCategorias.display();
+    listaCategorias->display();
 
     std::string nombre;
 
@@ -392,11 +412,11 @@ void Menu::eliminarCategoria() {
     std::cin.ignore();
     std::getline(std::cin, nombre);
 
-    listaCategorias.eliminarCategoria(nombre);
+    listaCategorias->eliminarCategoria(nombre);
 }
 
 void Menu::filtrarPorLetra() {
-    NodoCategoria* actual = listaCategorias.getHead();
+    NodoCategoria* actual = listaCategorias->getHead();
 
     char letra = 'A';
 
@@ -417,7 +437,7 @@ void Menu::filtrarCategoriasPorLetra() {
 
     letra = toupper(letra);
 
-    NodoCategoria* actual = listaCategorias.getHead();
+    NodoCategoria* actual = listaCategorias->getHead();
 
     bool encontrado = false;
     while (actual != nullptr) {
@@ -435,7 +455,7 @@ void Menu::filtrarCategoriasPorLetra() {
 }
 
 void Menu::buscarProducto() {
-    if (listaCategorias.getHead() == nullptr) {
+    if (listaCategorias->getHead() == nullptr) {
         std::cout << "No hay categorias disponibles.\n";
         return;
     }
@@ -445,7 +465,7 @@ void Menu::buscarProducto() {
     std::cin.ignore();
     std::getline(std::cin, termino);
 
-    NodoCategoria* categoria = listaCategorias.getHead();
+    NodoCategoria* categoria = listaCategorias->getHead();
     bool encontrado = false;
 
     while (categoria != nullptr) {

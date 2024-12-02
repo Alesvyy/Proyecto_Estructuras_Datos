@@ -134,7 +134,7 @@ void ListaVariantes::modificarVariante(const std::string& nombreActual, const st
 
 
 void ListaVariantes::modificarVariantePorNombre(const std::string& nuevoNombre,const std::string& nuevaEspecificacion) {
-    NodoVariante* nodo = obtenerNodoPorNombre(nuevoNombre);
+    NodoVariante* nodo = buscarVariante(nuevoNombre);
 
     if (nodo == nullptr) {
         std::cout << "El nombre ingresado no corresponde a ninguna variante.\n";
