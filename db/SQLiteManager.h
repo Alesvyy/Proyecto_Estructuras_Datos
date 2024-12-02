@@ -35,6 +35,7 @@ public:
     bool update(const string& table, const unordered_map<string, string>& data, const string& condition);
     bool remove(const string& table, const string& condition);
 
+    void saveVariante(Variante* variante);
     void saveProducto(Producto* producto);
     void saveCategoria(Categoria* categoria);
     ListaCategorias* getCategoriasFromDB();
@@ -42,6 +43,5 @@ public:
     void eliminarCategoria(Categoria* categoria);
     void eliminarProducto(Producto* categoria);
 };
-
 
 #endif //SQLITEMANAGER_H

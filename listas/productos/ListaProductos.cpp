@@ -29,7 +29,6 @@ void ListaProductos::setHead(NodoProducto *nuevoHead) {
  head = nuevoHead;
 }
 
-
 void ListaProductos::agregarProducto(Producto* producto) {
     if (!hayRepetidos(producto->getNombre())) {
         NodoProducto* nodoProductoNuevo = new NodoProducto(producto);
@@ -131,6 +130,10 @@ void ListaProductos::display() {
                   << " - Precio: " << temp->getProducto()->getPrecio()
                   << " Colones\n";
         std::cout << "   Descripcion: " << temp->getProducto()->getDescripcion() << "\n";
+        if (temp->getProducto()->getVariantes()->getHead() != nullptr) {
+            std::cout << "   Variantes: " << "\n";
+            temp->getProducto()->getVariantes()->display();
+        }
         temp = temp->getSiguiente();
         contador++;
     }

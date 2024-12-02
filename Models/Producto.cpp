@@ -3,6 +3,7 @@
 long Producto::globalId = 1;
 
 Producto::Producto(string nombre, string descripcion, double precio) {
+    setVariantes(new ListaVariantes());
     setNombre(nombre);
     setDescripcion(descripcion);
     setPrecio(precio);
@@ -11,6 +12,7 @@ Producto::Producto(string nombre, string descripcion, double precio) {
 }
 
 Producto::Producto(string nombre, string descripcion, double precio, string sku) {
+    setVariantes(new ListaVariantes());
     setNombre(nombre);
     setDescripcion(descripcion);
     setPrecio(precio);
@@ -20,6 +22,7 @@ Producto::Producto(string nombre, string descripcion, double precio, string sku)
 }
 
 Producto::Producto(string nombre, string descripcion, double precio, string sku, long categoriaId) {
+    setVariantes(new ListaVariantes());
     setNombre(nombre);
     setDescripcion(descripcion);
     setPrecio(precio);
@@ -52,6 +55,10 @@ long Producto::getId() {
     return id;
 }
 
+ListaVariantes *Producto::getVariantes() {
+    return variantes;
+}
+
 void Producto::setDescripcion(string pDescripcion) {
     descripcion = pDescripcion;
 }
@@ -72,6 +79,10 @@ void Producto::setIdCategoria(long pidCategoria) {
 
 void Producto::setId(long pid) {
     id = pid;
+}
+
+void Producto::setVariantes(ListaVariantes* pvariantes) {
+    variantes = pvariantes;
 }
 
 

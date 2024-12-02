@@ -5,9 +5,10 @@
 
 long Variante::globalId = 1;
 
-Variante::Variante(string nombre, string especificacion) {
+Variante::Variante(string nombre, string especificacion, long idProducto) {
     setNombre(nombre);
     setEspecificacion(especificacion);
+    setIdProducto(idProducto);
     setId(globalId);
     globalId += 1;
 }
@@ -23,8 +24,16 @@ long Variante::getId() {
     return id;
 }
 
+long Variante::getIdProducto() {
+    return idProducto;
+}
+
 void Variante::setId(long pId) {
     id = pId;
+}
+
+void Variante::setIdProducto(long pid) {
+    idProducto = pid;
 }
 
 void Variante::setNombre(string pNombre) {

@@ -13,11 +13,11 @@ public:
     ListaVariantes();
     ~ListaVariantes();
 
+    NodoVariante* getHead();
     void agregarVariante(Variante* variante);
     NodoVariante* buscarVariante(string nombreVariante);
     NodoVariante* buscarNodoAnterior(string nombreVariante);
     void eliminarVariante(string nombreVariante);
-    NodoVariante* getHead();
     void display();
     void modificarVariante(const std::string& nombreActual, const std::string& nuevoNombre,
         const std::string& nuevaEspecificacion);

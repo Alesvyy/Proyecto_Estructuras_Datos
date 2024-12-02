@@ -11,7 +11,6 @@ class Producto {
 
 public:
     static long globalId;
-    Producto();
     Producto(string nombre, string descripcion, double precio);
     Producto(string nombre, string descripcion, double precio, string sku);
     Producto(string nombre, string descripcion, double precio, string sku, long categoriaId);
@@ -22,6 +21,7 @@ public:
     string getSku();
     long getIdCategoria();
     long getId();
+    ListaVariantes* getVariantes();
 
     void setDescripcion(string pDescripcion);
     void setNombre(string pNombre);
@@ -29,6 +29,7 @@ public:
     void setSku(string pSku);
     void setIdCategoria(long pidCategoria);
     void setId(long id);
+    void setVariantes(ListaVariantes* variantes);
 
 private:
     long id;

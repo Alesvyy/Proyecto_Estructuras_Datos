@@ -54,6 +54,14 @@ bool SQLiteManager::loadIds() {
     return true;
 }
 
+void SQLiteManager::saveVariante(Variante* variante) {
+    unordered_map<string, string> data;
+    data["nombre"] = variante->getNombre();
+    data["especificacion"] = variante->getEspecificacion();
+    data["idProducto"] = std::to_string(variante->getIdProducto());
+    insert("variantes", data);
+}
+
 void SQLiteManager::saveProducto(Producto* producto) {
     unordered_map<string, string> data;
     data["nombre"] = producto->getNombre();

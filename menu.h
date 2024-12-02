@@ -11,6 +11,8 @@ public:
 
     SQLiteManager* dbManager;
     void cargarDatosDB();
+
+
     void mostrarMenu();
     void mostrarMenuColas();
     void agregarProducto();
@@ -25,7 +27,8 @@ public:
     void filtrarPorLetra();
     void filtrarCategoriasPorLetra();
     void filtrarPPrecio();
-
+    void agregarVariante();
+    void eliminarVariante();
 private:
     Cola cola;
     ListaCategorias* listaCategorias;

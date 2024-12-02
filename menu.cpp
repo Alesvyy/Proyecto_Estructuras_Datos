@@ -27,15 +27,17 @@ void Menu::mostrarMenu() {
         std::cout << "2. Ver Productos\n";
         std::cout << "3. Modificar Producto\n";
         std::cout << "4. Eliminar Producto\n";
-        std::cout << "***  Gestion de Categorias  ***\n";
+        std::cout << "\n***  Gestion de Categorias  ***\n";
         std::cout << "5. Agregar Categoria\n";
         std::cout << "6. Ver Categorias\n";
         std::cout << "7. Modificar Categoria\n";
         std::cout << "8. Eliminar Categoria\n";
-        std::cout << "***  Otras funcionalidades  ***\n";
-        std::cout << "9. Filtrar Categorias por Letra\n";
-        std::cout << "10. Buscar Producto\n";
-        std::cout << "11. Filtrar Productos por rango de precio\n";
+        std::cout << "\n***  Gestion de variantes  ***\n";
+        std::cout << "9. Agregar Variante\n";
+        std::cout << "\n***  Otras funcionalidades  ***\n";
+        std::cout << "10. Filtrar Categorias por Letra\n";
+        std::cout << "11. Buscar Producto\n";
+        std::cout << "12. Filtrar Productos por rango de precio\n";
         std::cout << "0. Salir\n";
         std::cout << "\n";
         std::cout << "Seleccione una opcion: ";
@@ -73,13 +75,16 @@ void Menu::mostrarMenu() {
                 eliminarCategoria();
             break;
             case 9:
-                filtrarCategoriasPorLetra();  // Llamamos a la función de filtro
+                agregarVariante();
             break;
             case 10:
-                buscarProducto();
+                filtrarCategoriasPorLetra();
             break;
             case 11:
-                filtrarPPrecio();  // Llamamos a la función de filtro
+                buscarProducto();
+            break;
+            case 12:
+                filtrarPPrecio();
             break;
             case 0:
                 std::cout << "Saliendo...\n";
@@ -174,7 +179,9 @@ void Menu::verProductos() {
 
     while (tempCategoria != nullptr) {
         std::cout << "\nCategoria " << contadorCategoria << ": " << tempCategoria->getCategoria()->getNombre() << "\n";
-        tempCategoria->getCategoria()->getListaProductos()->display();
+        if (tempCategoria->getCategoria()->getListaProductos()->getHead() != nullptr) {
+            tempCategoria->getCategoria()->getListaProductos()->display();
+        }
         tempCategoria = tempCategoria->getSiguiente();
         contadorCategoria++;
     }
@@ -544,4 +551,89 @@ void Menu::filtrarPPrecio() {
         nodo->getCategoria()->getListaProductos()->filtrarPPrecio(pMin, pMax);
         nodo = nodo->getSiguiente();
     }
+}
+
+void Menu::agregarVariante() {
+    if (listaCategorias->getHead() == nullptr) {
+        std::cout << "No hay categorias disponibles. Agregue una categoria primero.\n";
+        return;
+    }
+
+    std::cout << "Seleccione una categoria para agregar la variante:\n";
+    listaCategorias->display();
+
+    int numeroCategoria;
+    std::cout << "Ingrese el numero de la categoria: ";
+    while (true) {
+        std::cin >> numeroCategoria;
+
+        if (std::cin.fail() || numeroCategoria < 1 || numeroCategoria > listaCategorias->contarCategorias()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Entrada invalida. Por favor, ingrese un numero valido entre 1 y "
+                      << listaCategorias->contarCategorias() << ".\n";
+        } else {
+            break;
+        }
+    }
+
+    NodoCategoria* categoriaSeleccionada = listaCategorias->obtenerNodoPorNumero(numeroCategoria);
+    if (!categoriaSeleccionada) {
+        std::cout << "Numero de categoria invalido. Operacion cancelada.\n";
+        return;
+    }
+
+// --------------------
+    ListaProductos* productosCategoria = categoriaSeleccionada->getCategoria()->getListaProductos();
+
+    if (productosCategoria->getHead() == nullptr) {
+        std::cout << "No hay productos disponibles. Agregue un producto primero.\n";
+        return;
+    }
+
+    std::cout << "Seleccione un producto para agregar la variante:\n";
+    productosCategoria->display();
+
+    int numeroProducto;
+    std::cout << "Ingrese el numero del producto: ";
+    while (true) {
+        std::cin >> numeroProducto;
+
+        if (std::cin.fail() || numeroProducto < 1 || numeroProducto > listaCategorias->contarCategorias()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Entrada invalida. Por favor, ingrese un numero valido entre 1 y "
+                      << productosCategoria->contarProductos() << ".\n";
+        } else {
+            break;
+        }
+    }
+
+    NodoProducto* productoSeleccionado = productosCategoria->obtenerNodoPorNumero(numeroProducto);
+    if (!productoSeleccionado) {
+        std::cout << "Numero de categoria invalido. Operacion cancelada.\n";
+        return;
+    }
+
+// ----------------------------
+
+    std::string nombre, especificacion;
+
+    std::cin.ignore();
+    std::cout << "Ingrese el nombre de la variante: ";
+    std::getline(std::cin, nombre);
+
+    std::cout << "Ingrese la especificacion de la variante: ";
+    std::getline(std::cin, especificacion);
+
+    Variante* nuevaVariante = new Variante(nombre, especificacion, productoSeleccionado->getProducto()->getId());
+
+    dbManager->saveVariante(nuevaVariante);
+
+    productoSeleccionado->getProducto()->getVariantes()->agregarVariante(nuevaVariante);
+
+    std::cout << "\nVariante agregada exitosamente al producto \""
+              << productoSeleccionado->getProducto()->getNombre() << "\":\n";
+    std::cout << "Nombre: " << nombre << "\n";
+    std::cout << "Especificacion: " << especificacion << "\n";
 }

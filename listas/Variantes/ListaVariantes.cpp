@@ -16,6 +16,11 @@ ListaVariantes::~ListaVariantes() {
     }
     head = nullptr;
 }
+
+NodoVariante * ListaVariantes::getHead() {
+    return head;
+}
+
 void ListaVariantes::setHead(NodoVariante *nuevoHead) {
     head = nuevoHead;
 }
@@ -85,6 +90,16 @@ void ListaVariantes::display() {
     if (head == nullptr) {
         std::cout << "La lista esta vacia.\n";
         return;
+    }
+
+    NodoVariante* temp = head;
+    int contador = 1;
+    while (temp != nullptr) {
+        std::cout << "     " << contador << ". "
+                  << temp->getVariante()->getNombre()
+                  << ": " << temp->getVariante()->getEspecificacion() << endl;
+        temp = temp->getSiguiente();
+        contador++;
     }
 }
 
