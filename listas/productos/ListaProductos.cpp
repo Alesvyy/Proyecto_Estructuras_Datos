@@ -222,7 +222,7 @@ void ListaProductos::filtrarPPrecio(double pMin, double pMax) {
         actual = actual->getSiguiente();
     }
     if (!encontrado) {
-        std::cout << "No se encontraron productos en el rasgo de precios entre " << pMin << " y " << pMax << ".\n";
+        std::cout << "No se encontraron productos en el rasgo de precios entre " << pMin << " y " << pMax << "(en la categoria especifica)" << ".\n";
     }
 }
 
