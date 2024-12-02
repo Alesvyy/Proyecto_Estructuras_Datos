@@ -21,4 +21,10 @@ add_executable(ProyectoEstructurasDeDatos
         listas/productos/ListaProductos.h
         listas/productos/NodoProducto.cpp
         listas/productos/NodoProducto.h
+        listas/Variantes/listaVariantes.h
+        listas/Variantes/listaVarinates.cpp
+        listas/Variantes/nodoVariante.h
+        listas/Variantes/nodoVariante.cpp
+        Models/Variante.h
+        Models/Variante.cpp
 )
