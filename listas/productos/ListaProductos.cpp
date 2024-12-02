@@ -20,9 +20,15 @@ ListaProductos::~ListaProductos() {
      head = nullptr;
 }
 
+NodoProducto* ListaProductos::getHead() {
+    return head;
+}
+
+
 void ListaProductos::setHead(NodoProducto *nuevoHead) {
  head = nuevoHead;
 }
+
 
 void ListaProductos::agregarProducto(Producto* producto) {
     if (!hayRepetidos(producto->getNombre())) {

@@ -33,6 +33,7 @@ void Menu::mostrarMenu() {
         std::cout << "7. Modificar Categoria\n";
         std::cout << "8. Eliminar Categoria\n";
         std::cout << "9. Filtrar Categorias por Letra\n";
+        std::cout << "10. Buscar Producto\n";
         std::cout << "0. Salir\n";
         std::cout << "\n";
         std::cout << "Seleccione una opcion: ";
@@ -71,6 +72,9 @@ void Menu::mostrarMenu() {
             break;
             case 9:
                 filtrarCategoriasPorLetra();  // Llamamos a la función de filtro
+            break;
+            case 10:
+                buscarProducto();
             break;
             case 0:
                 std::cout << "Saliendo...\n";
@@ -122,9 +126,6 @@ void Menu::agregarProducto() {
     std::cout << "Ingrese la descripcion del producto: ";
     std::getline(std::cin, descripcion);
 
-    std::cout << "Ingrese el SKU del producto: ";
-    std::getline(std::cin, sku);
-
     std::cout << "Ingrese el precio del producto: ";
     while (true) {
         std::cin >> precio;
@@ -138,6 +139,10 @@ void Menu::agregarProducto() {
         }
     }
 
+    std::cin.ignore();
+    std::cout << "Ingrese el SKU del producto: ";
+    std::cin >> sku;
+
     Producto* nuevoProducto = new Producto(nombre, descripcion, precio, sku, categoriaSeleccionada->getCategoria()->getId());
     dbManager->saveProducto(nuevoProducto);
 
@@ -148,7 +153,9 @@ void Menu::agregarProducto() {
     std::cout << "Nombre: " << nombre << "\n";
     std::cout << "Descripcion: " << descripcion << "\n";
     std::cout << "Precio: " << precio << " Colones\n";
+    std::cout << "SKU: " << sku << "\n";
 }
+
 
 
 void Menu::verProductos() {
@@ -440,5 +447,45 @@ void Menu::filtrarCategoriasPorLetra() {
 
     if (!encontrado) {
         std::cout << "No se encontraron categorias que comiencen con la letra '" << letra << "'.\n";
+    }
+}
+
+void Menu::buscarProducto() {
+    if (listaCategorias.getHead() == nullptr) {
+        std::cout << "No hay categorias disponibles.\n";
+        return;
+    }
+
+    std::cout << "Ingrese el nombre o SKU del producto que desea buscar: ";
+    std::string termino;
+    std::cin.ignore();
+    std::getline(std::cin, termino);
+
+    NodoCategoria* categoria = listaCategorias.getHead();
+    bool encontrado = false;
+
+    while (categoria != nullptr) {
+        ListaProductos* listaProductos = categoria->getCategoria()->getListaProductos();
+        NodoProducto* producto = listaProductos->getHead();
+
+        while (producto != nullptr) {
+            if (producto->getProducto()->getNombre() == termino || producto->getProducto()->getSku() == termino) {
+                std::cout << "Producto encontrado en la categoria \"" << categoria->getCategoria()->getNombre() << "\":\n";
+                std::cout << "Nombre: " << producto->getProducto()->getNombre() << "\n";
+                std::cout << "Descripcion: " << producto->getProducto()->getDescripcion() << "\n";
+                std::cout << "Precio: " << producto->getProducto()->getPrecio() << "\n";
+                std::cout << "SKU: " << producto->getProducto()->getSku() << "\n";
+                encontrado = true;
+                break;
+            }
+            producto = producto->getSiguiente();
+        }
+
+        if (encontrado) break;
+        categoria = categoria->getSiguiente();
+    }
+
+    if (!encontrado) {
+        std::cout << "No se encontro un producto con el termino proporcionado.\n";
     }
 }

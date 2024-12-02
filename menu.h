@@ -15,6 +15,7 @@ public:
     void mostrarMenuColas();
     void agregarProducto();
     void verProductos();
+    void buscarProducto();
     void agregarCategoria();
     void eliminarCategoria();
     void verCategoria();
