@@ -9,30 +9,18 @@ class Variante {
 
 public:
     Variante();
-    Variante(string color, string material,double talla);
+    Variante(string nombre, string especificacion);
 
-    string getColor();
-    string getMaterial();
-    double getTalla();
+    string getNombre();
+    string getEspecificacion();
 
-    void setColor(string pColor);
-    void setMaterial(string pMaterial);
-    void setTalla(double pTalla);
+    void setNombre(string pNombre);
+    void setEspecificacion(string pEspecificacion);
+
 
 private:
-    string color;
-    string material;
-    double talla;
-
-    void crearVariante(string color, string material, double talla) {
-    }
-
-    void mostrarVariante(){}
-
-    void eliminarVariante(){}
-
-    void modificarVariante(){}
+    string nombre;
+    string especificacion;
 
 };
-
 #endif //VARIANTE_H

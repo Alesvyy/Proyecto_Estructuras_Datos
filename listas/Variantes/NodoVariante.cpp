@@ -1,7 +1,7 @@
 //
 // Created by jl568 on 11/30/2024.
 //
-#include "nodoVariante.h"
+#include "NodoVariante.h"
 
 NodoVariante::NodoVariante(Variante *variante) {
     setVariante(variante);

@@ -3,29 +3,23 @@
 //
 #include "Variante.h"
 
-Variante::Variante(string color, string material, double talla) {
-    setColor(color);
-    setMaterial(material);
-    setTalla(talla);
+Variante::Variante(string nombre, string especificacion) {
+    setNombre(nombre);
+    setEspecificacion(especificacion);
 }
 
-string Variante::getColor() {
-    return color;
+string Variante::getNombre() {
+    return nombre;
 }
-string Variante::getMaterial() {
-    return material;
-}
-double Variante::getTalla() {
-    return talla;
+string Variante::getEspecificacion() {
+    return especificacion;
 }
 
-void Variante::setColor(string pColor) {
-    color = pColor;
+void Variante::setNombre(string pNombre) {
+    nombre = pNombre;
 }
-void Variante::setMaterial(string pMaterial) {
-    material = pMaterial;
+void Variante::setEspecificacion(string pEspecificacion) {
+    especificacion = pEspecificacion;
 }
 
-void Variante::setTalla(double pTalla) {
-    talla = pTalla;
-}
+
