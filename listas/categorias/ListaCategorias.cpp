@@ -182,3 +182,4 @@ int ListaCategorias::contarCategorias() const {
     return contador;
 }
 
+

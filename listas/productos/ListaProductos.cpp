@@ -10,6 +10,10 @@ ListaProductos::ListaProductos() {
      head = nullptr;
 }
 
+NodoProducto* ListaProductos::getHead() {
+    return head;
+}
+
 ListaProductos::~ListaProductos() {
      NodoProducto* current = head;
      NodoProducto* next;
@@ -20,11 +24,6 @@ ListaProductos::~ListaProductos() {
      }
      head = nullptr;
 }
-
-NodoProducto* ListaProductos::getHead() {
-    return head;
-}
-
 
 void ListaProductos::setHead(NodoProducto *nuevoHead) {
  head = nuevoHead;
@@ -205,5 +204,22 @@ void ListaProductos::modificarProductoPorNumero(int numeroProducto, const std::s
               << "Nombre: \"" << nuevoNombre << "\"\n"
               << "Precio: " << nuevoPrecio << " Colones\n"
               << "Descripcion: \"" << nuevaDescripcion << "\"\n";
+}
+
+
+void ListaProductos::filtrarPPrecio(double pMin, double pMax) {
+    NodoProducto* actual = head;
+    bool encontrado = false;
+
+    while (actual != nullptr) {
+        if (actual->getProducto()->getPrecio() >= pMin && actual->getProducto()->getPrecio() <= pMax) {
+            std::cout << "Producto" << actual->getProducto()->getNombre() << std::endl;
+            encontrado = true;
+        }
+        actual = actual->getSiguiente();
+    }
+    if (!encontrado) {
+        std::cout << "No se encontraron productos en el rasgo de precios entre " << pMin << " y " << pMax << ".\n";
+    }
 }
 

@@ -26,10 +26,11 @@ public:
     int contarProductos() const;
     NodoProducto* obtenerNodoPorNumero(int numero);
     bool hayRepetidos(const std::string& nombre);
+    void filtrarPPrecio(double pMin, double pMax);
 
 
-    private:
-        NodoProducto* head;
+private:
+    NodoProducto* head;
     void setHead(NodoProducto* nuevoHead);
 
 };
